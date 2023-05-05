@@ -21,7 +21,9 @@ export const Layout = ({ children }) => {
         </div>
       </div>
       <Menu />
-      {children}
+      <div className="xs:max-w-sm">
+        {children}
+      </div>
     </div>
   );
 };
