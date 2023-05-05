@@ -7,7 +7,7 @@ require("dotenv").config({
  */
 module.exports = {
   siteMetadata: {
-    title: `The Gatsby Garage`,
+    title: `Techos y Mantenimientos`,
     siteUrl: `https://www.yourdomain.tld`,
   },
   plugins: [
@@ -31,7 +31,7 @@ module.exports = {
     {
       resolve: "gatsby-plugin-manifest",
       options: {
-        icon: "static/favicon.png",
+        icon: "static/favicon-bco.webp",
       },
     },
   ],

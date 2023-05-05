@@ -36,7 +36,29 @@ export const query = graphql`
         title
       }
     }
+
     wpCar(databaseId: { eq: $databaseId }) {
+      seo {
+        metaDesc
+        title
+      }
+    }
+
+    wpProyect(databaseId: { eq: $databaseId }) {
+      seo {
+        metaDesc
+        title
+      }
+    }
+
+    wpProduct(databaseId: { eq: $databaseId }) {
+      seo {
+        metaDesc
+        title
+      }
+    }
+
+    wpPost(databaseId: { eq: $databaseId }) {
       seo {
         metaDesc
         title
@@ -46,7 +68,12 @@ export const query = graphql`
 `;
 
 export const Head = ({ data }) => {
-  const page = data.wpPage || data.wpCar;
+  const page =
+    data.wpPage ||
+    data.wpCar ||
+    data.wpProyect ||
+    data.wpProduct ||
+    data.wpPost;
   return (
     <>
       <title>{page.seo?.title || ""}</title>

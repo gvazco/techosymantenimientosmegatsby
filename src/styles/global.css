@@ -39,6 +39,11 @@
 }
 
 @layer base {
+  body {
+    background-color: rgb(226 232 240) !important;
+    color: rgb(30 41 59) !important;
+  }
+
   ol {
     list-style-type: decimal;
   }
@@ -52,7 +57,7 @@
 
 @layer components {
   .btn {
-    @apply cursor-pointer rounded-sm bg-yellow-500 py-2 px-4 text-center font-bold uppercase !text-black no-underline transition-colors hover:bg-yellow-400;
+    @apply cursor-pointer rounded-sm bg-teal-600 py-2 px-4 text-center font-bold uppercase !text-white no-underline transition-colors hover:bg-teal-500;
   }
 }
 

@@ -10,7 +10,7 @@ export const CallToActionButton = ({
   return (
     <Link
       to={destination}
-      className={`${isActive ? "cursor-default bg-yellow-400" : ""} ${
+      className={`${isActive ? "cursor-default bg-teal-600" : ""} ${
         fullWidth ? "block" : "inline-block"
       } btn`}
     >
