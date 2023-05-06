@@ -3,6 +3,7 @@ import { Menu } from "../Menu";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPhoneAlt, faShieldHalved } from "@fortawesome/free-solid-svg-icons";
 import { SocialMenu } from "../SocialMenu";
+import { MainFooter } from "../MainFooter/MainFooter";
 
 export const Layout = ({ children }) => {
   return (
@@ -21,9 +22,8 @@ export const Layout = ({ children }) => {
         </div>
       </div>
       <Menu />
-      <div className="xs:max-w-sm">
-        {children}
-      </div>
+      <div className="xs:max-w-sm">{children}</div>
+      <MainFooter />
     </div>
   );
 };
