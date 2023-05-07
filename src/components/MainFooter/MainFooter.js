@@ -18,7 +18,7 @@ import { Link } from "gatsby";
 export const MainFooter = ({ items }) => {
   const [selectedItem, setSelectedItem] = useState(-1);
   return (
-    <footer className="bg-white p-4 dark:bg-slate-900 sm:p-6">
+    <footer className="p-4 bg-slate-900 sm:p-6">
       <div className="mx-auto max-w-screen-xl">
         <div className="flex items-center justify-center lg:justify-around">
           <div className="mb-6 md:mb-0">

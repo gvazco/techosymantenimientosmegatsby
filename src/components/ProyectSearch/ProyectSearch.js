@@ -94,10 +94,10 @@ export const ProyectSearch = ({ style, className }) => {
       <fieldset>
         <form
           onSubmit={handleSubmit}
-          className="mb-4 mt-3 flex flex-row justify-center rounded-lg border border-slate-200 bg-slate-800 p-4"
+          className="mb-4 mt-3 flex flex-col sm:flex-row justify-center rounded-lg border border-slate-200 bg-slate-800 p-4"
         >
           <div>
-            <strong className="text-slate-200">Filtrar por tipo de proyectos:</strong>
+            <strong className="text-slate-200">Filtrar por tipo de proyecto:</strong>
             <select
               name="type"
               defaultValue={defaultType}
@@ -111,9 +111,9 @@ export const ProyectSearch = ({ style, className }) => {
               <option value="mantenimiento">Mantenimiento</option>
             </select>
           </div>
-          <div className="ml-5 flex">
+          <div className="ml-0 mt-2 sm:scroll-mt-0.5 sm:ml-5 flex">
             <button type="submit" className="btn mt-auto mb-[2px]">
-              Submit
+              Buscar
             </button>
           </div>
         </form>
