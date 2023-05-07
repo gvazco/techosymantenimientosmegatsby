@@ -1,7 +1,6 @@
 import { graphql, Link, useStaticQuery } from "gatsby";
 import { StaticImage } from "gatsby-plugin-image";
 import { CallToActionButton } from "../CallToActionButton";
-import { SocialMenu } from "../SocialMenu";
 
 import React, { useState } from "react";
 import {
@@ -10,6 +9,13 @@ import {
   faPhoneAlt,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faFacebookF,
+  faFacebookMessenger,
+  faInstagram,
+  faWhatsapp,
+  faYoutube,
+} from "@fortawesome/free-brands-svg-icons";
 
 export const Menu = () => {
   const data = useStaticQuery(graphql`
@@ -34,12 +40,18 @@ export const Menu = () => {
                 }
                 label
               }
-              subMenuItems {
+            }
+          }
+        }
+      }
+      wp {
+        acfOptionsSocialMenu {
+          socialMenu {
+            socialItems {
+              socialItem {
                 label
                 destination {
-                  ... on WpPage {
-                    uri
-                  }
+                  url
                 }
               }
             }
@@ -50,7 +62,7 @@ export const Menu = () => {
   `);
   console.log("MAIN MENU DATA: ", data);
   const { menuItems } = data.wp.acfOptionsMainMenu.mainMenu;
-
+  const { socialItems } = data.wp.acfOptionsSocialMenu.socialMenu;
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false); // Agrega el estado local para controlar si el menú mobile está abierto o cerrado
   const [selectedItem, setSelectedItem] = useState(-1); // Inicializar con un valor por defecto
 
@@ -141,10 +153,69 @@ export const Menu = () => {
               </div>
             </div>
           ))}
-
-          <FontAwesomeIcon className="align-middle" icon={faPhoneAlt} />
-          <span className="p-2 align-middle">(55) 8280-2149</span>
-          <SocialMenu />
+          <>
+            <div className="mt-2">
+              <FontAwesomeIcon className="align-middle" icon={faPhoneAlt} />
+              <span className="p-2 align-middle">(55) 8280-2149</span>
+            </div>
+          </>
+          <>
+            <div className="sticky top-0 z-20 flex h-[64px] justify-center px-5">
+              <div className="block md:hidden">
+                <div className="flex flex-1 justify-end">
+                  {(socialItems || []).map((item) => (
+                    <div
+                      key={item.socialItem.id}
+                      onClick={() => setSelectedItem(item.socialItem.label)}
+                      className={`group relative cursor-pointer hover:bg-slate-200 hover:text-amber-600 ${
+                        selectedItem === item.socialItem.label
+                          ? "bg-slate-300 text-amber-600"
+                          : ""
+                      }`}
+                    >
+                      <div>
+                        <a
+                          href={item.socialItem.destination.url}
+                          className="block py-4 px-2"
+                        >
+                          {item.socialItem.label === "Facebook" && (
+                            <FontAwesomeIcon
+                              icon={faFacebookF}
+                              className="p-2 align-middle"
+                            />
+                          )}
+                          {item.socialItem.label === "Messenger" && (
+                            <FontAwesomeIcon
+                              icon={faFacebookMessenger}
+                              className="p-2 align-middle"
+                            />
+                          )}
+                          {item.socialItem.label === "Instagram" && (
+                            <FontAwesomeIcon
+                              icon={faInstagram}
+                              className="p-2 align-middle"
+                            />
+                          )}
+                          {item.socialItem.label === "Youtube" && (
+                            <FontAwesomeIcon
+                              icon={faYoutube}
+                              className="p-2 align-middle"
+                            />
+                          )}
+                          {item.socialItem.label === "WhatsApp" && (
+                            <FontAwesomeIcon
+                              icon={faWhatsapp}
+                              className="p-2 align-middle"
+                            />
+                          )}
+                        </a>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </>
         </div>
       </div>
     </nav>

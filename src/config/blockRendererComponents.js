@@ -11,6 +11,7 @@ import {
   TickItem,
   CarSearch,
   ContactForm7,
+  ProyectSearch
 } from "../components";
 import { GatsbyImage } from "gatsby-plugin-image";
 import numeral from "numeral";
@@ -52,6 +53,16 @@ export const blockRendererComponents = (block) => {
         <TickItem key={block.id}>
           <BlockRenderer blocks={block.innerBlocks} />
         </TickItem>
+      );
+    }
+    case "acf/proyectsearch": {
+      console.log('PROYECT: ', block);
+      return (
+        <ProyectSearch
+          key={block.id}
+          style={getStyles(block)}
+          className={getClasses(block)}
+        />
       );
     }
     case "core/cover": {
