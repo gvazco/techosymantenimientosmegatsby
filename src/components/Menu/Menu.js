@@ -147,7 +147,7 @@ export const Menu = () => {
               }`}
             >
               <div>
-                <Link to={menuItem.root.destination} className="block p-3">
+                <Link to={menuItem.root.destination.uri} className="block p-3">
                   {menuItem.root.label}
                 </Link>
               </div>
