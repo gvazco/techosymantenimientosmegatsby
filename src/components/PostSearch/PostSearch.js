@@ -1,19 +1,16 @@
 import React from "react";
 import { useQuery, gql } from "@apollo/client";
 // import numeral from "numeral";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTag } from "@fortawesome/free-solid-svg-icons";
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import { faTag } from "@fortawesome/free-solid-svg-icons";
 import { CallToActionButton } from "../CallToActionButton";
 import { PageNumber } from "./PageNumber";
 import { navigate } from "gatsby";
 
 export const PostSearch = ({ style, className }) => {
-  const pageSize = 3;
+  const pageSize = 6;
   let page = 1;
   let defaultType = "";
-  // let defaultMaxPrice = "";
-  // let defaultMinPrice = "";
-  // let defaultColor = "";
 
   if (typeof window !== "undefined") {
     const params = new URLSearchParams(window.location.search);
@@ -22,20 +19,13 @@ export const PostSearch = ({ style, className }) => {
   }
 
   let metaQuery = "{}";
+
   if (defaultType) {
     let typeQuery = "";
 
     if (defaultType) {
       typeQuery = `{key: "type", compare: EQUAL_TO, value: "${defaultType}"},`;
     }
-
-    // if (defaultMinPrice) {
-    //   minPriceQuery = `{key: "price", compare: GREATER_THAN_OR_EQUAL_TO, type: NUMERIC, value: "${defaultMinPrice}"},`;
-    // }
-
-    // if (defaultMaxPrice) {
-    //   maxPriceQuery = `{key: "price", compare: LESS_THAN_OR_EQUAL_TO, type: NUMERIC, value: "${defaultMaxPrice}"},`;
-    // }
 
     metaQuery = `{
       relation: AND

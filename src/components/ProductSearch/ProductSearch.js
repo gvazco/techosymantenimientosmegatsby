@@ -8,7 +8,7 @@ import { PageNumber } from "./PageNumber";
 import { navigate } from "gatsby";
 
 export const ProductSearch = ({ style, className }) => {
-  const pageSize = 3;
+  const pageSize = 6;
   let page = 1;
   let defaultType = "";
   // let defaultMaxPrice = "";

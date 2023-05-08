@@ -6,7 +6,7 @@ import { PageNumber } from "./PageNumber";
 import { navigate } from "gatsby";
 
 export const ProyectSearch = ({ style, className }) => {
-  const pageSize = 3;
+  const pageSize = 6;
   let page = 1;
   let defaultType = "";
 
