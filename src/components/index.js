@@ -5,4 +5,6 @@ export * from "./Cover";
 export * from "./TickItem";
 export * from "./CarSearch";
 export * from "./ProyectSearch";
+export * from "./ProductSearch";
+export * from "./PostSearch";
 export * from "./ContactForm7";

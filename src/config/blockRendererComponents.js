@@ -11,7 +11,9 @@ import {
   TickItem,
   CarSearch,
   ContactForm7,
-  ProyectSearch
+  ProyectSearch,
+  ProductSearch,
+  PostSearch
 } from "../components";
 import { GatsbyImage } from "gatsby-plugin-image";
 import numeral from "numeral";
@@ -56,9 +58,29 @@ export const blockRendererComponents = (block) => {
       );
     }
     case "acf/proyectsearch": {
-      console.log('PROYECT: ', block);
+      console.log("PROYECT: ", block);
       return (
         <ProyectSearch
+          key={block.id}
+          style={getStyles(block)}
+          className={getClasses(block)}
+        />
+      );
+    }
+    case "acf/productsearch": {
+      console.log("PODUCT: ", block);
+      return (
+        <ProductSearch
+          key={block.id}
+          style={getStyles(block)}
+          className={getClasses(block)}
+        />
+      );
+    }
+    case "acf/postsearch": {
+      console.log("POST: ", block);
+      return (
+        <PostSearch
           key={block.id}
           style={getStyles(block)}
           className={getClasses(block)}

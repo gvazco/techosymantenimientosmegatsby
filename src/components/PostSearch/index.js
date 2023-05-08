@@ -1,1 +1,1 @@
-export * from "./ProyectSearch";
+export * from "./PostSearch";
