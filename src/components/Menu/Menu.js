@@ -120,7 +120,7 @@ export const Menu = () => {
             onClick={handleMobileMenuToggle} // Asigna la función de manejo de eventos al evento onClick del botón
           >
             <span className="sr-only">Abrir menú</span>
-            <div className="row-auto flex align-middle">
+            <div className="row-auto flex align-middle text-xl">
               <FontAwesomeIcon icon={faBars} className="mr-2" />
               <FontAwesomeIcon icon={faHouseUser} className="mr-2" />
             </div>
@@ -147,7 +147,10 @@ export const Menu = () => {
               }`}
             >
               <div>
-                <Link to={menuItem.root.destination.uri} className="block p-3">
+                <Link
+                  to={menuItem.root.destination.uri}
+                  className="block p-3 no-underline"
+                >
                   {menuItem.root.label}
                 </Link>
               </div>
