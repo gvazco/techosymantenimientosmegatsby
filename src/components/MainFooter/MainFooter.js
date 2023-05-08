@@ -1,24 +1,16 @@
-import React, { useState } from "react";
+import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faLocationDot,
   faMailBulk,
   faPhoneAlt,
 } from "@fortawesome/free-solid-svg-icons";
-import {
-  faWhatsapp,
-  faFacebookF,
-  faFacebookMessenger,
-  faInstagram,
-  faYoutube,
-} from "@fortawesome/free-brands-svg-icons";
 import { StaticImage } from "gatsby-plugin-image";
 import { Link } from "gatsby";
 
 export const MainFooter = ({ items }) => {
-  const [selectedItem, setSelectedItem] = useState(-1);
   return (
-    <footer className="p-4 bg-slate-900 sm:p-6">
+    <footer className="bg-slate-900 p-4 sm:p-6">
       <div className="mx-auto max-w-screen-xl">
         <div className="flex items-center justify-center lg:justify-around">
           <div className="mb-6 md:mb-0">
@@ -36,14 +28,14 @@ export const MainFooter = ({ items }) => {
           </div>
           <div className="grid grid-cols-1 gap-4 text-center sm:grid-cols-2 md:grid-cols-3 md:text-left">
             <div>
-              <h2 className="mb-6 text-sm font-semibold uppercase text-slate-900 dark:text-slate-100">
+              <h2 className="mb-6 text-sm mt-3 md:mt-0 font-semibold uppercase text-slate-900 dark:text-slate-100">
                 Recursos
               </h2>
               <ul>
                 <li className="mb-4">
                   <Link
                     to="/blog/all-posts"
-                    className="text-slate-600 dark:text-slate-300"
+                    className="text-slate-600 no-underline dark:text-slate-300"
                   >
                     Blog
                   </Link>
@@ -51,7 +43,7 @@ export const MainFooter = ({ items }) => {
                 <li className="mb-4">
                   <Link
                     to="/contacto"
-                    className="text-slate-600 dark:text-slate-300"
+                    className="text-slate-600 no-underline dark:text-slate-300"
                   >
                     Contacto
                   </Link>
@@ -59,7 +51,7 @@ export const MainFooter = ({ items }) => {
                 <li className="mb-4">
                   <Link
                     to="/portafolios/all-proyects"
-                    className="text-slate-600 dark:text-slate-300"
+                    className="text-slate-600 no-underline dark:text-slate-300"
                   >
                     Portafolios
                   </Link>
@@ -67,7 +59,7 @@ export const MainFooter = ({ items }) => {
                 <li className="mb-4">
                   <Link
                     to="/all-products"
-                    className="text-slate-600 dark:text-slate-300"
+                    className="text-slate-600 no-underline dark:text-slate-300"
                   >
                     Productos
                   </Link>
@@ -125,12 +117,15 @@ export const MainFooter = ({ items }) => {
               </h2>
               <ul className="text-slate-600 dark:text-slate-400">
                 <li className="mb-4">
-                  <Link to="/" className="text-slate-600 dark:text-slate-300">
+                  <Link
+                    to="/"
+                    className="text-slate-600 no-underline dark:text-slate-300"
+                  >
                     Política de privacidad
                   </Link>
                 </li>
                 <li>
-                  <Link to="/" className="text-slate-600 dark:text-slate-300">
+                  <Link to="/" className="text-slate-600 dark:text-slate-300 no-underline">
                     Términos y Condiciones
                   </Link>
                 </li>
@@ -140,7 +135,8 @@ export const MainFooter = ({ items }) => {
         </div>
         <hr className="my-6 border-slate-200 dark:border-slate-700 sm:mx-auto lg:my-8" />
         <p className="text-center text-sm text-slate-500 dark:text-slate-400">
-          © 2023 Techos y Mantenimientos | Mevasa. Todos los derechos reservados.
+          © 2023 Techos y Mantenimientos | Mevasa. Todos los derechos
+          reservados.
         </p>
       </div>
     </footer>
