@@ -28,7 +28,7 @@ export const MainFooter = ({ items }) => {
           </div>
           <div className="grid grid-cols-1 gap-4 text-center sm:grid-cols-2 md:grid-cols-3 md:text-left">
             <div>
-              <h2 className="mb-6 text-sm mt-3 md:mt-0 font-semibold uppercase text-slate-900 dark:text-slate-100">
+              <h2 className="mb-6 mt-3 text-sm font-semibold uppercase text-slate-900 dark:text-slate-100 md:mt-0">
                 Recursos
               </h2>
               <ul>
@@ -125,7 +125,10 @@ export const MainFooter = ({ items }) => {
                   </Link>
                 </li>
                 <li>
-                  <Link to="/" className="text-slate-600 dark:text-slate-300 no-underline">
+                  <Link
+                    to="/"
+                    className="text-slate-600 no-underline dark:text-slate-300"
+                  >
                     Términos y Condiciones
                   </Link>
                 </li>

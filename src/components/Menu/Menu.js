@@ -1,7 +1,7 @@
 import { graphql, Link, useStaticQuery } from "gatsby";
 import { StaticImage } from "gatsby-plugin-image";
 import { CallToActionButton } from "../CallToActionButton";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   faBars,
   faCartArrowDown,
@@ -18,7 +18,6 @@ import {
 } from "@fortawesome/free-brands-svg-icons";
 import { CartList } from "./CartList/CartList";
 import Modal from "./CartList/Modal";
-
 
 export const Menu = () => {
   const data = useStaticQuery(graphql`
@@ -74,6 +73,14 @@ export const Menu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
   const [isOpen, setIsOpen] = useState(false);
+  const [cartCount, setCartCount] = useState(0);
+
+  useEffect(() => {
+    const cartItems = JSON.parse(localStorage.getItem("cart"));
+    if (cartItems) {
+      setCartCount(cartItems.length);
+    }
+  }, []);
 
   function openModal() {
     setIsOpen(true);
@@ -114,6 +121,11 @@ export const Menu = () => {
             <div>
               <button onClick={openModal} className="ml-1 mr-6">
                 <FontAwesomeIcon icon={faCartArrowDown} />
+                {cartCount > 0 && (
+                  <span className="ml-1 inline-flex h-5 w-5 items-center justify-center rounded-full bg-red-600 text-xs font-bold text-white">
+                    {cartCount}
+                  </span>
+                )}
               </button>
               <Modal isOpen={isOpen} onClose={closeModal}>
                 <h2 className="mb-4 text-lg font-bold">
@@ -136,11 +148,16 @@ export const Menu = () => {
           </div>
         </div>
 
-        <div className="flex md:hidden flex-row items-center justify-between text-[1.3rem]">
+        <div className="flex flex-row items-center justify-between text-[1.3rem] md:hidden">
           <span className="sr-only">Abrir carrito</span>
           <div>
             <button onClick={openModal} className="mx-7">
               <FontAwesomeIcon icon={faCartArrowDown} />
+              {cartCount > 0 && (
+                <span className="ml-1 inline-flex h-5 w-5 items-center justify-center rounded-full bg-red-600 text-xs font-bold text-white">
+                  {cartCount}
+                </span>
+              )}
             </button>
             <Modal isOpen={isOpen} onClose={closeModal}>
               <h2 className="mb-4 text-lg font-bold">
@@ -160,8 +177,6 @@ export const Menu = () => {
             <span className="sr-only">Abrir menú</span>
 
             <FontAwesomeIcon icon={faBars} />
-
-
           </button>
         </div>
       </div>
