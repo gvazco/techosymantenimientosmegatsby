@@ -37,9 +37,9 @@ export const SocialMenu = () => {
       <div className="sticky top-0 z-20 flex h-[64px] justify-between px-5">
         <div className="hidden md:block">
           <div className="flex flex-1 justify-end">
-            {(socialItems || []).map((item) => (
+            {(socialItems || []).map((item, index) => (
               <div
-                key={item.socialItem.id}
+                key={index}
                 onClick={() => setSelectedItem(item.socialItem.label)}
                 className={`group relative cursor-pointer hover:bg-slate-100 hover:text-amber-600 ${
                   selectedItem === item.socialItem.label

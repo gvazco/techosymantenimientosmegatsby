@@ -1,13 +1,26 @@
-import React from "react";
+import React, { useState } from "react";
 import { useQuery, gql } from "@apollo/client";
-// import numeral from "numeral";
+import numeral from "numeral";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTag } from "@fortawesome/free-solid-svg-icons";
+import {
+  faArrowDownShortWide,
+  faArrowUpShortWide,
+  faBoxOpen,
+  faCartFlatbed,
+  faDownLeftAndUpRightToCenter,
+  faFlask,
+  faIndustry,
+  faLeftRight,
+  faTags,
+  faTruckFast,
+  faUpRightAndDownLeftFromCenter,
+} from "@fortawesome/free-solid-svg-icons";
 import { CallToActionButton } from "../CallToActionButton";
 import { PageNumber } from "./PageNumber";
 import { navigate } from "gatsby";
 
 export const ProductSearch = ({ style, className }) => {
+  const [showDescription, setShowDescription] = useState(false); // agregar estado
   const pageSize = 6;
   let page = 1;
   let defaultType = "";
@@ -58,6 +71,21 @@ export const ProductSearch = ({ style, className }) => {
             }
             productFeatures {
               type
+              description {
+                anchoEfectivo
+                calibre
+                contenido
+                entrega
+                espesor
+                existencia
+                largoEfectivo
+                largoEstandar
+                marca
+                otros
+                precio
+                presentacion
+                whatsapp
+              }
             }
           }
           pageInfo {
@@ -87,6 +115,32 @@ export const ProductSearch = ({ style, className }) => {
     const params = new URLSearchParams(formData);
     params.set("page", "1");
     navigate(`${window.location.pathname}?${params.toString()}`);
+  };
+
+  const handleAddToCart = (product) => {
+    const cartItems = JSON.parse(localStorage.getItem("cart")) || [];
+
+    const productInCart = cartItems.find((item) => item.id === product.id);
+    if (productInCart) {
+      alert("¡Upss! El producto ya esta en la lista.");
+      return; // El producto ya está en el carrito, no lo agregamos de nuevo
+    }
+
+    cartItems.push(product);
+    localStorage.setItem("cart", JSON.stringify(cartItems));
+    alert("¡Genial! El producto se agrego a la lista.");
+  };
+
+  const separador = (array) => {
+    if (array.length === 0) return "";
+    if (array.length === 1) return array[0];
+    const ultimoElemento = array[array.length - 1];
+    const primerosElementos = array.slice(0, -1).join(", ");
+    return `${primerosElementos} y ${ultimoElemento}`;
+  };
+
+  const handleToggleDescription = () => {
+    setShowDescription(!showDescription);
   };
 
   return (
@@ -128,25 +182,222 @@ export const ProductSearch = ({ style, className }) => {
         <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
           {data.products.nodes.map((product) => (
             <div
-              className="flex flex-col border border-stone-200 bg-stone-100 p-2"
+              className="flex flex-col border border-slate-300 bg-slate-100 p-2 hover:bg-slate-200 roun"
               key={product.databaseId}
             >
               {!!product.featuredImage?.node?.sourceUrl && (
                 <img
-                  className="h-[200px] w-full object-cover"
+                  className="h-[300px] w-full object-cover"
                   src={product.featuredImage.node.sourceUrl}
                   alt=""
+                  style={{ objectFit: "cover", maxHeight: "300px" }}
                 />
               )}
-              <div className="my-2 justify-between gap-2 font-heading text-xl font-bold lg:flex">
-                <div className="my-2">{product.title}</div>
-              </div>
-              <div>
+
+              <>
+                <div className="my-2 font-heading text-xl font-bold text-center">
+                  {product.title}
+                </div>
+
+                {!!product.productFeatures.description.precio && (
+                  <div className="text-lg">
+                    $
+                    {numeral(product.productFeatures.description.precio).format(
+                      "0,0"
+                    )}
+                  </div>
+                )}
+
+                {!!product.productFeatures.description.marca && (
+                  <div className="flex">
+                    <FontAwesomeIcon
+                      className="p-2 align-middle"
+                      icon={faTags}
+                    />
+                    <span className="overflow-hidden truncate text-ellipsis p-1">
+                      Marca: {product.productFeatures.description.marca}
+                    </span>
+                  </div>
+                )}
+
+                {!!product.productFeatures.description.anchoEfectivo && (
+                  <div className="flex">
+                    <FontAwesomeIcon
+                      className="p-2 align-middle"
+                      icon={faLeftRight}
+                    />
+                    <span className="overflow-hidden truncate text-ellipsis p-1">
+                      {separador(
+                        product.productFeatures.description.anchoEfectivo
+                      )}{" "}
+                      ancho efectivo.
+                    </span>
+                  </div>
+                )}
+
+                {!!product.productFeatures.description.largoEfectivo && (
+                  <div className="flex">
+                    <FontAwesomeIcon
+                      className="p-2 align-middle"
+                      icon={faUpRightAndDownLeftFromCenter}
+                    />
+
+                    <span className="overflow-hidden truncate text-ellipsis p-1">
+                      {separador(
+                        product.productFeatures.description.largoEfectivo
+                      )}
+                      largo estándar.
+                    </span>
+                  </div>
+                )}
+
+                {!!product.productFeatures.description.largoEstandar && (
+                  <div className="flex">
+                    <FontAwesomeIcon
+                      className="p-2 align-middle"
+                      icon={faUpRightAndDownLeftFromCenter}
+                    />
+                    <span className="overflow-hidden truncate text-ellipsis p-1">
+                      {separador(
+                        product.productFeatures.description.largoEstandar
+                      )}{" "}
+                      largo estándar.
+                    </span>
+                  </div>
+                )}
+
+                {!showDescription && (
+                  <button
+                    className="btn bg-slate-200 hover:bg-slate-300"
+                    onClick={handleToggleDescription}
+                  >
+                    <span className="text-slate-800">
+                      <FontAwesomeIcon
+                        icon={faArrowDownShortWide}
+                        className="mr-2 text-slate-800"
+                      />
+                      Previsualizar Info
+                    </span>
+                  </button>
+                )}
+
+                {showDescription && (
+                  <div id="description">
+                    {!!product.productFeatures.description.espesor && (
+                      <div className="flex">
+                        <FontAwesomeIcon
+                          className="p-2 align-middle"
+                          icon={faDownLeftAndUpRightToCenter}
+                        />
+                        <span className="overflow-hidden truncate text-ellipsis p-1">
+                          Espesor disponible:{" "}
+                          {separador(
+                            product.productFeatures.description.espesor
+                          )}{" "}
+                          pulgadas.
+                        </span>
+                      </div>
+                    )}
+
+                    {!!product.productFeatures.description.calibre && (
+                      <div className="flex">
+                        <FontAwesomeIcon
+                          className="p-2 align-middle"
+                          icon={faDownLeftAndUpRightToCenter}
+                        />
+                        <span className="overflow-hidden truncate text-ellipsis p-1">
+                          Calibre disponible:{" "}
+                          {separador(
+                            product.productFeatures.description.calibre
+                          )}
+                        </span>
+                      </div>
+                    )}
+
+                    {!!product.productFeatures.description.contenido && (
+                      <div className="flex">
+                        <FontAwesomeIcon
+                          className="p-2 align-middle"
+                          icon={faFlask}
+                        />
+                        <span className="overflow-hidden truncate text-ellipsis p-1">
+                          {product.productFeatures.description.contenido}
+                        </span>
+                      </div>
+                    )}
+
+                    {!!product.productFeatures.description.presentacion && (
+                      <div className="flex">
+                        <FontAwesomeIcon
+                          className="p-2 align-middle"
+                          icon={faBoxOpen}
+                        />
+                        <span className="overflow-hidden truncate text-ellipsis p-1">
+                          {product.productFeatures.description.presentacion}
+                        </span>
+                      </div>
+                    )}
+
+                    {!!product.productFeatures.description.entrega && (
+                      <div className="flex">
+                        <FontAwesomeIcon
+                          className="p-2 align-middle"
+                          icon={faTruckFast}
+                        />
+                        <span className="overflow-hidden truncate text-ellipsis p-1">
+                          Disponibilidad:{" "}
+                          {product.productFeatures.description.entrega}
+                        </span>
+                      </div>
+                    )}
+
+                    {!!product.productFeatures.description.otros && (
+                      <div className="flex">
+                        <FontAwesomeIcon
+                          className="p-2 align-middle"
+                          icon={faIndustry}
+                        />
+                        <span className="overflow-hidden truncate text-ellipsis p-1">
+                          {product.productFeatures.description.otros}
+                        </span>
+                      </div>
+                    )}
+                  </div>
+                )}
+
+                {showDescription && (
+                  <button
+                    className="btn bg-slate-200 hover:bg-slate-300"
+                    onClick={handleToggleDescription}
+                  >
+                    <span className="text-slate-800">
+                      <FontAwesomeIcon
+                        icon={faArrowUpShortWide}
+                        className="mr-2 text-slate-800"
+                      />
+                      Cerrar Info
+                    </span>
+                  </button>
+                )}
+              </>
+
+              <div className="my-2 flex flex-row items-center justify-between">
                 <CallToActionButton
-                  fullWidth
-                  label="View more details"
+                  label="Ver detalles"
                   destination={product.uri}
                 />
+                <span className="btn bg-slate-900 hover:bg-slate-700 ">
+                  <FontAwesomeIcon
+                    className="mr-2 text-slate-100"
+                    icon={faCartFlatbed}
+                  />
+                  <button
+                    className="text-slate-100"
+                    onClick={() => handleAddToCart(product)}
+                  >
+                    Cotizar Producto
+                  </button>
+                </span>
               </div>
             </div>
           ))}

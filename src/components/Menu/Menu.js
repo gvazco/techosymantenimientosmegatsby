@@ -1,10 +1,10 @@
 import { graphql, Link, useStaticQuery } from "gatsby";
 import { StaticImage } from "gatsby-plugin-image";
 import { CallToActionButton } from "../CallToActionButton";
-
 import React, { useState } from "react";
 import {
   faBars,
+  faCartArrowDown,
   faHouseUser,
   faPhoneAlt,
 } from "@fortawesome/free-solid-svg-icons";
@@ -16,6 +16,7 @@ import {
   faWhatsapp,
   faYoutube,
 } from "@fortawesome/free-brands-svg-icons";
+import { CartList } from "./CartList/CartList";
 
 export const Menu = () => {
   const data = useStaticQuery(graphql`
@@ -60,7 +61,7 @@ export const Menu = () => {
       }
     }
   `);
-  console.log("MAIN MENU DATA: ", data);
+  // console.log("MAIN MENU DATA: ", data);
   const { menuItems } = data.wp.acfOptionsMainMenu.mainMenu;
   const { socialItems } = data.wp.acfOptionsSocialMenu.socialMenu;
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false); // Agrega el estado local para controlar si el menú mobile está abierto o cerrado
@@ -69,6 +70,12 @@ export const Menu = () => {
   // Función de manejo de eventos para abrir/cerrar el menú mobile
   const handleMobileMenuToggle = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+
+  const [showCartList, setShowCartList] = useState(false);
+
+  const handleShowCartList = () => {
+    setShowCartList(!showCartList);
   };
 
   return (
@@ -99,6 +106,10 @@ export const Menu = () => {
               </div>
             ))}
 
+            <button onClick={handleShowCartList} className="ml-1 mr-6">
+              <FontAwesomeIcon icon={faCartArrowDown} />
+            </button>
+
             <CallToActionButton
               label={
                 data.wp.acfOptionsMainMenu.mainMenu.callToActionButton.label
@@ -127,7 +138,6 @@ export const Menu = () => {
           </button>
         </div>
       </div>
-
       {/* Menu Mobile */}
       <div
         className={`md:hidden ${
@@ -166,9 +176,9 @@ export const Menu = () => {
             <div className="sticky top-0 z-20 flex h-[64px] justify-center px-5">
               <div className="block md:hidden">
                 <div className="flex flex-1 justify-end">
-                  {(socialItems || []).map((item) => (
+                  {(socialItems || []).map((item, index) => (
                     <div
-                      key={item.socialItem.id}
+                      key={index}
                       onClick={() => setSelectedItem(item.socialItem.label)}
                       className={`group relative cursor-pointer hover:bg-slate-200 hover:text-amber-600 ${
                         selectedItem === item.socialItem.label
@@ -221,6 +231,8 @@ export const Menu = () => {
           </>
         </div>
       </div>
+
+      {showCartList && <CartList />}
     </nav>
   );
 };
