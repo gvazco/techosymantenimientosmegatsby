@@ -5,7 +5,6 @@ import React, { useEffect, useState } from "react";
 import {
   faBars,
   faCartArrowDown,
-  faHouseUser,
   faPhoneAlt,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -18,6 +17,7 @@ import {
 } from "@fortawesome/free-brands-svg-icons";
 import { CartList } from "./CartList/CartList";
 import Modal from "./CartList/Modal";
+import { ProductSearch } from "../ProductSearch";
 
 export const Menu = () => {
   const data = useStaticQuery(graphql`
@@ -82,6 +82,18 @@ export const Menu = () => {
     }
   }, []);
 
+  const updateCartCount = () => {
+    const cartItems = JSON.parse(localStorage.getItem("cart"));
+    if (cartItems) {
+      setCartCount(cartItems.length);
+    }
+  };
+
+  useEffect(() => {
+    updateCartCount();
+  }, []);
+
+
   function openModal() {
     setIsOpen(true);
   }
@@ -119,13 +131,16 @@ export const Menu = () => {
             ))}
 
             <div>
+
               <button onClick={openModal} className="ml-1 mr-6">
-                <FontAwesomeIcon icon={faCartArrowDown} />
-                {cartCount > 0 && (
-                  <span className="ml-1 inline-flex h-5 w-5 items-center justify-center rounded-full bg-red-600 text-xs font-bold text-white">
-                    {cartCount}
-                  </span>
-                )}
+                <div className="flex flex-row">
+                  <FontAwesomeIcon icon={faCartArrowDown} />
+                  {cartCount > 0 && (
+                    <span className="ml-1 inline-flex h-5 w-5 items-center justify-center rounded-full bg-red-600 text-xs font-bold text-white">
+                      {cartCount}
+                    </span>
+                  )}
+                </div>
               </button>
               <Modal isOpen={isOpen} onClose={closeModal}>
                 <h2 className="mb-4 text-lg font-bold">
@@ -152,12 +167,14 @@ export const Menu = () => {
           <span className="sr-only">Abrir carrito</span>
           <div>
             <button onClick={openModal} className="mx-7">
-              <FontAwesomeIcon icon={faCartArrowDown} />
-              {cartCount > 0 && (
-                <span className="ml-1 inline-flex h-5 w-5 items-center justify-center rounded-full bg-red-600 text-xs font-bold text-white">
-                  {cartCount}
-                </span>
-              )}
+              <div className="flex flex-row">
+                <FontAwesomeIcon icon={faCartArrowDown} />
+                {cartCount > 0 && (
+                  <span className="ml-1 inline-flex h-5 w-5 items-center justify-center rounded-full bg-red-600 text-xs font-bold text-white">
+                    {cartCount}
+                  </span>
+                )}
+              </div>
             </button>
             <Modal isOpen={isOpen} onClose={closeModal}>
               <h2 className="mb-4 text-lg font-bold">

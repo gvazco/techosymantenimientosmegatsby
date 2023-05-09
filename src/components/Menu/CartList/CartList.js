@@ -27,17 +27,21 @@ export const CartList = () => {
                 style={{ objectFit: "cover", maxHeight: "50px" }}
               />
             )}
-            <p className="mr-3 text-sm md:text-base">{item.title}</p>
-            <button
-              className="btn-delete bg-red-600 hover:bg-red-500"
-              onClick={() => handleRemoveItem(index)}
-            >
-              Eliminar
-            </button>
+            <div className="flex flex-col md:flex-row">
+              <p className="mr-3 text-sm md:text-base">
+                {item.title}
+              </p>
+              <button
+                className="btn-delete bg-red-600 hover:bg-red-500"
+                onClick={() => handleRemoveItem(index)}
+              >
+                Eliminar
+              </button>
+            </div>
           </li>
         ))}
 
-        {cartItems == "" && (
+        {cartItems === "" && (
           <li>
             <h3 className="flex flex-row items-center text-sm font-bold">
               ¡Ooops! No hay productos en su carrito.

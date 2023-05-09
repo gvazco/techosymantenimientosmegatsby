@@ -20,7 +20,7 @@ import { PageNumber } from "./PageNumber";
 import { navigate } from "gatsby";
 import SuccessToast from "./SuccessToast/SuccessToast";
 
-export const ProductSearch = ({ style, className }) => {
+export const ProductSearch = ({ style, className, props }) => {
   const [showDescription, setShowDescription] = useState(false); // agregar estado
   const pageSize = 6;
   let page = 1;
@@ -118,6 +118,20 @@ export const ProductSearch = ({ style, className }) => {
     navigate(`${window.location.pathname}?${params.toString()}`);
   };
 
+  // const handleAddToCart = (product) => {
+  //   const cartItems = JSON.parse(localStorage.getItem("cart")) || [];
+
+  //   const productInCart = cartItems.find((item) => item.id === product.id);
+  //   if (productInCart) {
+  //     alert("¡Upss! El producto ya esta en la lista.");
+  //     return; // El producto ya está en el carrito, no lo agregamos de nuevo
+  //   }
+
+  //   cartItems.push(product);
+  //   localStorage.setItem("cart", JSON.stringify(cartItems));
+  //   handleShowToast();
+  // };
+
   const handleAddToCart = (product) => {
     const cartItems = JSON.parse(localStorage.getItem("cart")) || [];
 
@@ -130,6 +144,7 @@ export const ProductSearch = ({ style, className }) => {
     cartItems.push(product);
     localStorage.setItem("cart", JSON.stringify(cartItems));
     handleShowToast();
+    props.updateCartCount();
   };
 
   const [showToast, setShowToast] = useState(false);
