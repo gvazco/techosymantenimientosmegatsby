@@ -18,6 +18,7 @@ import {
 import { CallToActionButton } from "../CallToActionButton";
 import { PageNumber } from "./PageNumber";
 import { navigate } from "gatsby";
+import SuccessToast from "./SuccessToast/SuccessToast";
 
 export const ProductSearch = ({ style, className }) => {
   const [showDescription, setShowDescription] = useState(false); // agregar estado
@@ -128,8 +129,18 @@ export const ProductSearch = ({ style, className }) => {
 
     cartItems.push(product);
     localStorage.setItem("cart", JSON.stringify(cartItems));
-    alert("¡Genial! El producto se agrego a la lista.");
+    handleShowToast();
   };
+
+  const [showToast, setShowToast] = useState(false);
+
+  function handleShowToast() {
+    setShowToast(true);
+  }
+
+  function handleCloseToast() {
+    setShowToast(false);
+  }
 
   const separador = (array) => {
     if (array.length === 0) return "";
@@ -182,7 +193,7 @@ export const ProductSearch = ({ style, className }) => {
         <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
           {data.products.nodes.map((product) => (
             <div
-              className="flex flex-col border border-slate-300 bg-slate-100 p-2 hover:bg-slate-200 roun"
+              className="roun flex flex-col border border-slate-300 bg-slate-100 p-2 hover:bg-slate-200"
               key={product.databaseId}
             >
               {!!product.featuredImage?.node?.sourceUrl && (
@@ -195,7 +206,7 @@ export const ProductSearch = ({ style, className }) => {
               )}
 
               <>
-                <div className="my-2 font-heading text-xl font-bold text-center">
+                <div className="my-2 text-center font-heading text-xl font-bold">
                   {product.title}
                 </div>
 
@@ -229,7 +240,7 @@ export const ProductSearch = ({ style, className }) => {
                     <span className="overflow-hidden truncate text-ellipsis p-1">
                       {separador(
                         product.productFeatures.description.anchoEfectivo
-                      )}{" "}
+                      )}
                       ancho efectivo.
                     </span>
                   </div>
@@ -381,23 +392,25 @@ export const ProductSearch = ({ style, className }) => {
                 )}
               </>
 
-              <div className="my-2 flex flex-row items-center justify-between">
+              <div className="my-2 flex flex-col gap-2 md:flex-row">
                 <CallToActionButton
+                  fullWidth
                   label="Ver detalles"
                   destination={product.uri}
                 />
-                <span className="btn bg-slate-900 hover:bg-slate-700 ">
-                  <FontAwesomeIcon
-                    className="mr-2 text-slate-100"
-                    icon={faCartFlatbed}
-                  />
-                  <button
-                    className="text-slate-100"
-                    onClick={() => handleAddToCart(product)}
-                  >
-                    Cotizar Producto
-                  </button>
-                </span>
+
+                <button
+                  className="btn w-full bg-slate-900 text-slate-100 hover:bg-slate-700"
+                  onClick={() => handleAddToCart(product)}
+                >
+                  <span className="">
+                    <FontAwesomeIcon
+                      className="mr-2 text-slate-100"
+                      icon={faCartFlatbed}
+                    />
+                    Cotizar
+                  </span>
+                </button>
               </div>
             </div>
           ))}
@@ -409,6 +422,13 @@ export const ProductSearch = ({ style, className }) => {
             return <PageNumber key={i} pageNumber={i + 1} />;
           })}
         </div>
+      )}
+
+      {showToast && (
+        <SuccessToast
+          message="Este es un mensaje Toast"
+          onClose={handleCloseToast}
+        />
       )}
     </div>
   );

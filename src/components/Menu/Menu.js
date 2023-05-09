@@ -17,6 +17,8 @@ import {
   faYoutube,
 } from "@fortawesome/free-brands-svg-icons";
 import { CartList } from "./CartList/CartList";
+import Modal from "./CartList/Modal";
+
 
 export const Menu = () => {
   const data = useStaticQuery(graphql`
@@ -71,17 +73,20 @@ export const Menu = () => {
   const handleMobileMenuToggle = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
+  const [isOpen, setIsOpen] = useState(false);
 
-  const [showCartList, setShowCartList] = useState(false);
+  function openModal() {
+    setIsOpen(true);
+  }
 
-  const handleShowCartList = () => {
-    setShowCartList(!showCartList);
-  };
+  function closeModal() {
+    setIsOpen(false);
+  }
 
   return (
     <nav>
       <div className="sticky top-0 z-20 flex h-16 items-center justify-between bg-gradient-to-tr from-slate-steel-color to-slate-700 px-5 px-4 font-bold text-white">
-        <Link className="pl-5" to="/">
+        <Link className="px-5" to="/">
           <StaticImage
             src="../../../static/icon-bco.webp"
             layout="fixed"
@@ -106,9 +111,18 @@ export const Menu = () => {
               </div>
             ))}
 
-            <button onClick={handleShowCartList} className="ml-1 mr-6">
-              <FontAwesomeIcon icon={faCartArrowDown} />
-            </button>
+            <div>
+              <button onClick={openModal} className="ml-1 mr-6">
+                <FontAwesomeIcon icon={faCartArrowDown} />
+              </button>
+              <Modal isOpen={isOpen} onClose={closeModal}>
+                <h2 className="mb-4 text-lg font-bold">
+                  Añadir a la cotización:
+                </h2>
+                <CartList />
+                <button onClick={closeModal}>Cerrar</button>
+              </Modal>
+            </div>
 
             <CallToActionButton
               label={
@@ -122,19 +136,32 @@ export const Menu = () => {
           </div>
         </div>
 
-        <div className="mr-2 flex md:hidden">
+        <div className="flex md:hidden flex-row items-center justify-between text-[1.3rem]">
+          <span className="sr-only">Abrir carrito</span>
+          <div>
+            <button onClick={openModal} className="mx-7">
+              <FontAwesomeIcon icon={faCartArrowDown} />
+            </button>
+            <Modal isOpen={isOpen} onClose={closeModal}>
+              <h2 className="mb-4 text-lg font-bold">
+                Añadir a la cotización:
+              </h2>
+              <CartList />
+              <button onClick={closeModal}>Cerrar</button>
+            </Modal>
+          </div>
           <button
             type="button"
-            className=""
+            className="mx-6"
             aria-controls="mobile-menu"
             aria-expanded={isMobileMenuOpen} // Usa el estado local para determinar si el menú mobile está abierto o cerrado
             onClick={handleMobileMenuToggle} // Asigna la función de manejo de eventos al evento onClick del botón
           >
             <span className="sr-only">Abrir menú</span>
-            <div className="row-auto flex align-middle text-xl">
-              <FontAwesomeIcon icon={faBars} className="mr-2" />
-              <FontAwesomeIcon icon={faHouseUser} className="mr-2" />
-            </div>
+
+            <FontAwesomeIcon icon={faBars} />
+
+
           </button>
         </div>
       </div>
@@ -231,8 +258,6 @@ export const Menu = () => {
           </>
         </div>
       </div>
-
-      {showCartList && <CartList />}
     </nav>
   );
 };
