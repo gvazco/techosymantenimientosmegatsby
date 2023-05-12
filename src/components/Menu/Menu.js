@@ -83,9 +83,13 @@ export const Menu = () => {
   }
 
   useEffect(() => {
-    setCartItems(JSON.parse(localStorage.getItem("cart")));
-    if (cartItems) {
-      setCartCount(cartItems.length);
+    const storedCartItems = JSON.parse(localStorage.getItem("cart"));
+    setCartItems(storedCartItems);
+
+    if (storedCartItems) {
+      setCartCount(storedCartItems.length);
+    } else {
+      setCartCount(0);
     }
   }, [cartItems]);
 
@@ -121,7 +125,7 @@ export const Menu = () => {
               <button onClick={openModal} className="ml-1 mr-6">
                 <div className="flex flex-row">
                   <FontAwesomeIcon icon={faCartArrowDown} />
-                  {cartCount > 0 && (
+                  {cartCount >= 0 && (
                     <span className="ml-1 inline-flex h-5 w-5 items-center justify-center rounded-full bg-red-600 text-xs font-bold text-white">
                       {cartCount}
                     </span>

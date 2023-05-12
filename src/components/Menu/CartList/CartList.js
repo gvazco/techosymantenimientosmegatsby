@@ -18,8 +18,9 @@ export const CartList = () => {
   };
 
   return (
-    <div className="mx-auto mt-3 flex max-w-[1200px] min-h-full">
+    <div className="mx-auto mt-3 flex min-h-full max-w-[1200px]">
       <ul className="border border-slate-300 p-3 text-right">
+        {/* Exist products in Cart */}
         {cartItems == "" && (
           <li>
             <h3 className="flex flex-row items-center text-sm font-bold">
@@ -27,7 +28,7 @@ export const CartList = () => {
             </h3>
           </li>
         )}
-
+        {/* Empty Cart */}
         {cartItems.map((item, index) => (
           <li
             key={index}
