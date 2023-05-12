@@ -19,6 +19,7 @@ import { CallToActionButton } from "../CallToActionButton";
 import { PageNumber } from "./PageNumber";
 import { navigate } from "gatsby";
 import SuccessToast from "./SuccessToast/SuccessToast";
+import ErrorToast from "./ErrorToast/ErrorToast";
 
 export const ProductSearch = ({ style, className, props }) => {
   const [showDescription, setShowDescription] = useState(false); // agregar estado
@@ -107,6 +108,8 @@ export const ProductSearch = ({ style, className, props }) => {
 
   const totalResults = data?.products?.pageInfo?.offsetPagination?.total || 0;
   const totalPages = Math.ceil(totalResults / pageSize);
+  const [showSuccessToast, setShowSuccessToast] = useState(false);
+  const [showErrorToast, setShowErrorToast] = useState(false);
 
   console.log("DATA: ", data, loading, error);
 
@@ -118,43 +121,51 @@ export const ProductSearch = ({ style, className, props }) => {
     navigate(`${window.location.pathname}?${params.toString()}`);
   };
 
-  // const handleAddToCart = (product) => {
-  //   const cartItems = JSON.parse(localStorage.getItem("cart")) || [];
-
-  //   const productInCart = cartItems.find((item) => item.id === product.id);
-  //   if (productInCart) {
-  //     alert("¡Upss! El producto ya esta en la lista.");
-  //     return; // El producto ya está en el carrito, no lo agregamos de nuevo
-  //   }
-
-  //   cartItems.push(product);
-  //   localStorage.setItem("cart", JSON.stringify(cartItems));
-  //   handleShowToast();
-  // };
-
-  const handleAddToCart = (product) => {
+  const handleAddToCart = (products) => {
     const cartItems = JSON.parse(localStorage.getItem("cart")) || [];
 
-    const productInCart = cartItems.find((item) => item.id === product.id);
-    if (productInCart) {
-      alert("¡Upss! El producto ya esta en la lista.");
-      return; // El producto ya está en el carrito, no lo agregamos de nuevo
+    if (!Array.isArray(products)) {
+      // Si products no es una lista, lo convertimos en una lista
+      products = [products];
     }
 
-    cartItems.push(product);
+    products.forEach((product) => {
+      console.log(product);
+      console.log(cartItems);
+      const productIndex = cartItems.findIndex(
+        (item) => item.databaseId === product.databaseId
+      );
+      if (productIndex === -1) {
+        // si el producto no está en el carrito, lo agregamos
+        cartItems.push(product);
+        alert("Genial, el producto se agrego a la lista...");
+        handleShowToast();
+      } else {
+        // si el producto ya está en el carrito
+        alert("Opps! Este producto ya esta en la lista...");
+        handleShowErrorToast();
+      }
+
+    });
+
     localStorage.setItem("cart", JSON.stringify(cartItems));
-    handleShowToast();
-    props.updateCartCount();
+
   };
 
-  const [showToast, setShowToast] = useState(false);
-
   function handleShowToast() {
-    setShowToast(true);
+    setShowSuccessToast(true);
   }
 
   function handleCloseToast() {
-    setShowToast(false);
+    setShowSuccessToast(false);
+  }
+
+  function handleShowErrorToast() {
+    setShowErrorToast(true);
+  }
+
+  function handleCloseErrorToast() {
+    setShowErrorToast(false);
   }
 
   const separador = (array) => {
@@ -198,7 +209,7 @@ export const ProductSearch = ({ style, className, props }) => {
             </select>
           </div>
           <div className="ml-0 mt-2 flex sm:ml-5 sm:scroll-mt-0.5">
-            <button type="submit" className="btn mt-auto mb-[2px]">
+            <button type="submit" className="btn w-full mt-auto mb-[2px] ">
               Buscar
             </button>
           </div>
@@ -225,73 +236,6 @@ export const ProductSearch = ({ style, className, props }) => {
                   {product.title}
                 </div>
 
-                {!!product.productFeatures.description.precio && (
-                  <div className="text-lg">
-                    $
-                    {numeral(product.productFeatures.description.precio).format(
-                      "0,0"
-                    )}
-                  </div>
-                )}
-
-                {!!product.productFeatures.description.marca && (
-                  <div className="flex">
-                    <FontAwesomeIcon
-                      className="p-2 align-middle"
-                      icon={faTags}
-                    />
-                    <span className="overflow-hidden truncate text-ellipsis p-1">
-                      Marca: {product.productFeatures.description.marca}
-                    </span>
-                  </div>
-                )}
-
-                {!!product.productFeatures.description.anchoEfectivo && (
-                  <div className="flex">
-                    <FontAwesomeIcon
-                      className="p-2 align-middle"
-                      icon={faLeftRight}
-                    />
-                    <span className="overflow-hidden truncate text-ellipsis p-1">
-                      {separador(
-                        product.productFeatures.description.anchoEfectivo
-                      )}
-                      ancho efectivo.
-                    </span>
-                  </div>
-                )}
-
-                {!!product.productFeatures.description.largoEfectivo && (
-                  <div className="flex">
-                    <FontAwesomeIcon
-                      className="p-2 align-middle"
-                      icon={faUpRightAndDownLeftFromCenter}
-                    />
-
-                    <span className="overflow-hidden truncate text-ellipsis p-1">
-                      {separador(
-                        product.productFeatures.description.largoEfectivo
-                      )}
-                      largo estándar.
-                    </span>
-                  </div>
-                )}
-
-                {!!product.productFeatures.description.largoEstandar && (
-                  <div className="flex">
-                    <FontAwesomeIcon
-                      className="p-2 align-middle"
-                      icon={faUpRightAndDownLeftFromCenter}
-                    />
-                    <span className="overflow-hidden truncate text-ellipsis p-1">
-                      {separador(
-                        product.productFeatures.description.largoEstandar
-                      )}{" "}
-                      largo estándar.
-                    </span>
-                  </div>
-                )}
-
                 {!showDescription && (
                   <button
                     className="btn bg-slate-200 hover:bg-slate-300"
@@ -309,6 +253,71 @@ export const ProductSearch = ({ style, className, props }) => {
 
                 {showDescription && (
                   <div id="description">
+                    {!!product.productFeatures.description.precio && (
+                      <div className="text-lg">
+                        $
+                        {numeral(
+                          product.productFeatures.description.precio
+                        ).format("0,0")}
+                      </div>
+                    )}
+
+                    {!!product.productFeatures.description.marca && (
+                      <div className="flex">
+                        <FontAwesomeIcon
+                          className="p-2 align-middle"
+                          icon={faTags}
+                        />
+                        <span className="overflow-hidden truncate text-ellipsis p-1">
+                          Marca: {product.productFeatures.description.marca}
+                        </span>
+                      </div>
+                    )}
+                    {!!product.productFeatures.description.anchoEfectivo && (
+                      <div className="flex">
+                        <FontAwesomeIcon
+                          className="p-2 align-middle"
+                          icon={faLeftRight}
+                        />
+                        <span className="overflow-hidden truncate text-ellipsis p-1">
+                          {separador(
+                            product.productFeatures.description.anchoEfectivo
+                          )}
+                          ancho efectivo.
+                        </span>
+                      </div>
+                    )}
+
+                    {!!product.productFeatures.description.largoEfectivo && (
+                      <div className="flex">
+                        <FontAwesomeIcon
+                          className="p-2 align-middle"
+                          icon={faUpRightAndDownLeftFromCenter}
+                        />
+
+                        <span className="overflow-hidden truncate text-ellipsis p-1">
+                          {separador(
+                            product.productFeatures.description.largoEfectivo
+                          )}
+                          largo estándar.
+                        </span>
+                      </div>
+                    )}
+
+                    {!!product.productFeatures.description.largoEstandar && (
+                      <div className="flex">
+                        <FontAwesomeIcon
+                          className="p-2 align-middle"
+                          icon={faUpRightAndDownLeftFromCenter}
+                        />
+                        <span className="overflow-hidden truncate text-ellipsis p-1">
+                          {separador(
+                            product.productFeatures.description.largoEstandar
+                          )}{" "}
+                          largo estándar.
+                        </span>
+                      </div>
+                    )}
                     {!!product.productFeatures.description.espesor && (
                       <div className="flex">
                         <FontAwesomeIcon
@@ -439,10 +448,17 @@ export const ProductSearch = ({ style, className, props }) => {
         </div>
       )}
 
-      {showToast && (
+      {showSuccessToast && (
         <SuccessToast
-          message="Este es un mensaje Toast"
+          message="¡Genial! Este producto se ha añadido a tu lista de cotización..."
           onClose={handleCloseToast}
+        />
+      )}
+
+      {showErrorToast && (
+        <ErrorToast
+          message="¡Ooops! Este producto ya se añadió a tu lista de cotización..."
+          onClose={handleCloseErrorToast}
         />
       )}
     </div>

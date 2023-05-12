@@ -12,13 +12,27 @@ export const CartList = () => {
     localStorage.setItem("cart", JSON.stringify(updatedCartItems));
   };
 
-  console.log(cartItems);
+  const handleClearCart = () => {
+    setCartItems([]);
+    localStorage.removeItem("cart");
+  };
 
   return (
-    <div className="mx-auto mt-3 flex max-w-[1200px] justify-end">
+    <div className="mx-auto mt-3 flex max-w-[1200px] min-h-full">
       <ul className="border border-slate-300 p-3 text-right">
+        {cartItems == "" && (
+          <li>
+            <h3 className="flex flex-row items-center text-sm font-bold">
+              ¡Ooops! No hay productos en su carrito.
+            </h3>
+          </li>
+        )}
+
         {cartItems.map((item, index) => (
-          <li key={index} className="flex flex-row items-center">
+          <li
+            key={index}
+            className="flex flex-row items-center md:justify-between"
+          >
             {!!item.featuredImage?.node?.sourceUrl && (
               <img
                 className="mr-3 h-[50px] w-[50px] object-cover"
@@ -27,10 +41,8 @@ export const CartList = () => {
                 style={{ objectFit: "cover", maxHeight: "50px" }}
               />
             )}
-            <div className="flex flex-col md:flex-row">
-              <p className="mr-3 text-sm md:text-base">
-                {item.title}
-              </p>
+            <div className="flex flex-col items-center  md:flex-row">
+              <p className="mr-3 text-sm md:text-base">{item.title}</p>
               <button
                 className="btn-delete bg-red-600 hover:bg-red-500"
                 onClick={() => handleRemoveItem(index)}
@@ -41,12 +53,18 @@ export const CartList = () => {
           </li>
         ))}
 
-        {cartItems === "" && (
-          <li>
-            <h3 className="flex flex-row items-center text-sm font-bold">
-              ¡Ooops! No hay productos en su carrito.
-            </h3>
-          </li>
+        {cartItems != "" && (
+          <>
+            <hr className="mt-3"></hr>
+            <div className="mt-3 flex flex-row justify-between">
+              <button onClick={handleClearCart} className="btn-delete">
+                Limpiar
+              </button>
+              <button className="btn-delete bg-teal-600 hover:bg-teal-500">
+                Continuar
+              </button>
+            </div>
+          </>
         )}
       </ul>
     </div>

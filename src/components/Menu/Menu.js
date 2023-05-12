@@ -17,7 +17,6 @@ import {
 } from "@fortawesome/free-brands-svg-icons";
 import { CartList } from "./CartList/CartList";
 import Modal from "./CartList/Modal";
-import { ProductSearch } from "../ProductSearch";
 
 export const Menu = () => {
   const data = useStaticQuery(graphql`
@@ -67,32 +66,13 @@ export const Menu = () => {
   const { socialItems } = data.wp.acfOptionsSocialMenu.socialMenu;
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false); // Agrega el estado local para controlar si el menú mobile está abierto o cerrado
   const [selectedItem, setSelectedItem] = useState(-1); // Inicializar con un valor por defecto
-
+  const [isOpen, setIsOpen] = useState(false);
+  const [cartItems, setCartItems] = useState([]);
+  const [cartCount, setCartCount] = useState(0);
   // Función de manejo de eventos para abrir/cerrar el menú mobile
   const handleMobileMenuToggle = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
-  const [isOpen, setIsOpen] = useState(false);
-  const [cartCount, setCartCount] = useState(0);
-
-  useEffect(() => {
-    const cartItems = JSON.parse(localStorage.getItem("cart"));
-    if (cartItems) {
-      setCartCount(cartItems.length);
-    }
-  }, []);
-
-  const updateCartCount = () => {
-    const cartItems = JSON.parse(localStorage.getItem("cart"));
-    if (cartItems) {
-      setCartCount(cartItems.length);
-    }
-  };
-
-  useEffect(() => {
-    updateCartCount();
-  }, []);
-
 
   function openModal() {
     setIsOpen(true);
@@ -101,6 +81,13 @@ export const Menu = () => {
   function closeModal() {
     setIsOpen(false);
   }
+
+  useEffect(() => {
+    setCartItems(JSON.parse(localStorage.getItem("cart")));
+    if (cartItems) {
+      setCartCount(cartItems.length);
+    }
+  }, [cartItems]);
 
   return (
     <nav>
@@ -131,7 +118,6 @@ export const Menu = () => {
             ))}
 
             <div>
-
               <button onClick={openModal} className="ml-1 mr-6">
                 <div className="flex flex-row">
                   <FontAwesomeIcon icon={faCartArrowDown} />
