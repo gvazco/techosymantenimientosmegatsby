@@ -32,6 +32,9 @@ export const ProductFeatures = ({ productFeatures }) => {
   } = productFeatures;
   console.log(featuredImage)
 
+  const image = `../../../public${featuredImage}`;
+  console.log(image)
+
 
   const separador = (array) => {
     if (array.length === 0) return "";
@@ -42,18 +45,10 @@ export const ProductFeatures = ({ productFeatures }) => {
   };
 
   return (
-    <div className="mx-auto my-10 flex max-w-md flex-col justify-center bg-transparent p-5 text-center text-slate-200 lg:max-w-5xl lg:flex-row lg:justify-around">
-
-      {/* <StaticImage
-        className="mx-auto mb-8 rounded-lg border-x-4 border-y-4 border-solid border-slate-300 p-2"
-        src={imageUrl}
-        objectFit="cover"
-        objectPosition="center"
-        alt="Product Image"
-      /> */}
+    <div className="mx-auto my-10 flex max-w-md flex-col justify-center bg-transparent p-5 text-center text-slate-900 lg:max-w-5xl lg:flex-row lg:justify-around">
       <div className="my-auto flex flex-col align-middle">
         <div>
-          <h2>{title}</h2>
+          <h2 className="text-left text-4xl mb-3">{title}</h2>
         </div>
         {!existencia && (
           <div className="relative flex w-full">
@@ -68,7 +63,7 @@ export const ProductFeatures = ({ productFeatures }) => {
             <span className="p-1 text-left">Marca: {marca}</span>
           </div>
         )}
-        {!!largo_efectivo && (
+        {largo_efectivo != "" && (
           <div className="flex">
             <FontAwesomeIcon
               className="p-2 align-middle"
@@ -80,7 +75,7 @@ export const ProductFeatures = ({ productFeatures }) => {
             </span>
           </div>
         )}
-        {!!largo_estandar && (
+        {largo_estandar != "" && (
           <div className="flex">
             <FontAwesomeIcon
               className="p-2 align-middle"
@@ -91,7 +86,7 @@ export const ProductFeatures = ({ productFeatures }) => {
             </span>
           </div>
         )}
-        {!!ancho_efectivo && (
+        {ancho_efectivo != "" && (
           <div className="flex">
             <FontAwesomeIcon className="p-2 align-middle" icon={faLeftRight} />
             <span className="p-1 text-left">
@@ -99,7 +94,7 @@ export const ProductFeatures = ({ productFeatures }) => {
             </span>
           </div>
         )}
-        {!!espesor && (
+        {espesor != "" && (
           <div className="flex">
             <FontAwesomeIcon
               className="p-2 align-middle"
@@ -110,7 +105,7 @@ export const ProductFeatures = ({ productFeatures }) => {
             </span>
           </div>
         )}
-        {!!calibre && (
+        {calibre != "" && (
           <div className="flex">
             <FontAwesomeIcon
               className="p-2 align-middle"
