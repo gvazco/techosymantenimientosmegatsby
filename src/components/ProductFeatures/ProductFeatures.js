@@ -32,6 +32,7 @@ export const ProductFeatures = ({ productFeatures }) => {
 
 
   const separador = (array) => {
+    console.log(array.length)
     if (array.length === 0) return "";
     if (array.length === 1) return array[0];
     const ultimoElemento = array[array.length - 1];
@@ -40,7 +41,7 @@ export const ProductFeatures = ({ productFeatures }) => {
   };
 
   return (
-    <div className="mx-auto my-10 flex max-w-md flex-col justify-center bg-transparent text-center text-slate-900 lg:max-w-5xl lg:flex-row lg:justify-around">
+    <div className="mx-auto my-10 flex w-full flex-col justify-center bg-transparent text-center text-slate-900 lg:max-w-5xl lg:flex-row lg:justify-around">
       <div className="my-auto flex flex-col align-middle">
         <div>
           <h2 className="text-left text-4xl mb-3">{title}</h2>
