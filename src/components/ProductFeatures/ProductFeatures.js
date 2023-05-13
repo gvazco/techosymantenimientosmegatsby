@@ -28,12 +28,7 @@ export const ProductFeatures = ({ productFeatures }) => {
     entrega,
     otros,
     whatsapp,
-    featuredImage,
   } = productFeatures;
-  console.log(featuredImage)
-
-  const image = `../../../public${featuredImage}`;
-  console.log(image)
 
 
   const separador = (array) => {
@@ -45,7 +40,7 @@ export const ProductFeatures = ({ productFeatures }) => {
   };
 
   return (
-    <div className="mx-auto my-10 flex max-w-md flex-col justify-center bg-transparent p-5 text-center text-slate-900 lg:max-w-5xl lg:flex-row lg:justify-around">
+    <div className="mx-auto my-10 flex max-w-md flex-col justify-center bg-transparent text-center text-slate-900 lg:max-w-5xl lg:flex-row lg:justify-around">
       <div className="my-auto flex flex-col align-middle">
         <div>
           <h2 className="text-left text-4xl mb-3">{title}</h2>
