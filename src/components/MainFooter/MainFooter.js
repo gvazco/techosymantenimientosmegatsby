@@ -28,30 +28,27 @@ export const MainFooter = ({ items }) => {
           </div>
           <div className="grid grid-cols-1 gap-4 text-center sm:grid-cols-2 md:grid-cols-3 md:text-left">
             <div>
-              <h2 className="mb-6 mt-3 text-sm font-semibold uppercase text-slate-900 dark:text-slate-100 md:mt-0">
+              <h2 className="mb-6 mt-3 text-sm font-semibold uppercase  text-slate-100 md:mt-0">
                 Recursos
               </h2>
               <ul>
                 <li className="mb-4">
                   <Link
                     to="/blog/all-posts"
-                    className="text-slate-600 no-underline dark:text-slate-300"
+                    className=" text-slate-300 no-underline"
                   >
                     Blog
                   </Link>
                 </li>
                 <li className="mb-4">
-                  <Link
-                    to="/contacto"
-                    className="text-slate-600 no-underline dark:text-slate-300"
-                  >
+                  <Link to="/contacto" className=" text-slate-300 no-underline">
                     Contacto
                   </Link>
                 </li>
                 <li className="mb-4">
                   <Link
                     to="/portafolios/all-proyects"
-                    className="text-slate-600 no-underline dark:text-slate-300"
+                    className=" text-slate-300 no-underline"
                   >
                     Portafolios
                   </Link>
@@ -59,7 +56,7 @@ export const MainFooter = ({ items }) => {
                 <li className="mb-4">
                   <Link
                     to="/all-products"
-                    className="text-slate-600 no-underline dark:text-slate-300"
+                    className=" text-slate-300 no-underline"
                   >
                     Productos
                   </Link>
@@ -68,10 +65,10 @@ export const MainFooter = ({ items }) => {
             </div>
 
             <div>
-              <h2 className="mb-6 text-sm font-semibold uppercase text-slate-900 dark:text-slate-100">
+              <h2 className="mb-6 text-sm font-semibold uppercase text-slate-100">
                 Encuentranos en:
               </h2>
-              <ul className="text-slate-600 dark:text-slate-300">
+              <ul className=" text-slate-300">
                 <li className="mb-4 ">
                   <FontAwesomeIcon
                     className="ml-2 align-middle"
@@ -112,23 +109,17 @@ export const MainFooter = ({ items }) => {
             </div>
 
             <div className="lg:text-right">
-              <h2 className="mb-6 text-sm font-semibold uppercase text-slate-900 dark:text-slate-100">
+              <h2 className="mb-6 text-sm font-semibold uppercase text-slate-100">
                 Legales
               </h2>
-              <ul className="text-slate-600 dark:text-slate-400">
+              <ul className=" text-slate-400">
                 <li className="mb-4">
-                  <Link
-                    to="/"
-                    className="text-slate-600 no-underline dark:text-slate-300"
-                  >
+                  <Link to="/" className=" text-slate-300 no-underline">
                     Política de privacidad
                   </Link>
                 </li>
                 <li>
-                  <Link
-                    to="/"
-                    className="text-slate-600 no-underline dark:text-slate-300"
-                  >
+                  <Link to="/" className=" text-slate-300 no-underline">
                     Términos y Condiciones
                   </Link>
                 </li>
@@ -136,8 +127,8 @@ export const MainFooter = ({ items }) => {
             </div>
           </div>
         </div>
-        <hr className="my-6 border-slate-200 dark:border-slate-700 sm:mx-auto lg:my-8" />
-        <p className="text-center text-sm text-slate-500 dark:text-slate-400">
+        <hr className="my-6  border-slate-700 sm:mx-auto lg:my-8" />
+        <p className="text-center text-sm text-slate-400">
           © 2023 Techos y Mantenimientos | Mevasa. Todos los derechos
           reservados.
         </p>

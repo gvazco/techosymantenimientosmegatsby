@@ -13,10 +13,11 @@ import {
   ContactForm7,
   ProyectSearch,
   ProductSearch,
-  PostSearch
+  PostSearch,
 } from "../components";
 import { GatsbyImage } from "gatsby-plugin-image";
 import numeral from "numeral";
+import { ProductFeatures } from "../components/ProductFeatures/ProductFeatures";
 
 export const blockRendererComponents = (block) => {
   switch (block.name) {
@@ -77,6 +78,17 @@ export const blockRendererComponents = (block) => {
         />
       );
     }
+    case "acf/productfeatures": {
+      console.log("PODUCT FEATURES: ", block);
+      return (
+        <ProductFeatures
+          key={block.id}
+          style={getStyles(block)}
+          className={getClasses(block)}
+          productFeatures={block.attributes}
+        />
+      );
+    }
     case "acf/postsearch": {
       console.log("POST: ", block);
       return (
@@ -100,6 +112,7 @@ export const blockRendererComponents = (block) => {
       );
     }
     case "core/image": {
+      console.log("IMAGE: ", block);
       return (
         <figure key={block.id} className={getClasses(block)}>
           <GatsbyImage

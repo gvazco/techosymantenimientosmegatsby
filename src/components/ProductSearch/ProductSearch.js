@@ -21,7 +21,7 @@ import { navigate } from "gatsby";
 import SuccessToast from "./SuccessToast/SuccessToast";
 import ErrorToast from "./ErrorToast/ErrorToast";
 
-export const ProductSearch = ({ style, className, props }) => {
+export const ProductSearch = ({ style, className }) => {
   const [showDescription, setShowDescription] = useState(false); // agregar estado
   const pageSize = 6;
   let page = 1;

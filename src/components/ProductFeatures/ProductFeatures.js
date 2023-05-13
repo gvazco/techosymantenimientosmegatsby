@@ -1,0 +1,151 @@
+import {
+  faBoxOpen,
+  faDownLeftAndUpRightToCenter,
+  faFlask,
+  faIndustry,
+  faLeftRight,
+  faTags,
+  faTruckFast,
+  faUpRightAndDownLeftFromCenter,
+} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { StaticImage } from "gatsby-plugin-image";
+import React from "react";
+
+export const ProductFeatures = ({ productFeatures }) => {
+  const {
+    title,
+    marca,
+    precio,
+    largo_efectivo,
+    largo_estandar,
+    ancho_efectivo,
+    calibre,
+    espesor,
+    existencia,
+    presentacion,
+    contenido,
+    entrega,
+    otros,
+    whatsapp,
+    featuredImage,
+  } = productFeatures;
+  console.log(featuredImage)
+
+
+  const separador = (array) => {
+    if (array.length === 0) return "";
+    if (array.length === 1) return array[0];
+    const ultimoElemento = array[array.length - 1];
+    const primerosElementos = array.slice(0, -1).join(", ");
+    return `${primerosElementos} y ${ultimoElemento}`;
+  };
+
+  return (
+    <div className="mx-auto my-10 flex max-w-md flex-col justify-center bg-transparent p-5 text-center text-slate-200 lg:max-w-5xl lg:flex-row lg:justify-around">
+
+      {/* <StaticImage
+        className="mx-auto mb-8 rounded-lg border-x-4 border-y-4 border-solid border-slate-300 p-2"
+        src={imageUrl}
+        objectFit="cover"
+        objectPosition="center"
+        alt="Product Image"
+      /> */}
+      <div className="my-auto flex flex-col align-middle">
+        <div>
+          <h2>{title}</h2>
+        </div>
+        {!existencia && (
+          <div className="relative flex w-full">
+            <div className="absolute inset-0 flex items-center justify-center text-2xl font-bold uppercase text-slate-200 lg:text-3xl">
+              <span className="bg-orange-500 p-3">Agotado</span>
+            </div>
+          </div>
+        )}
+        {!!marca && (
+          <div className="flex">
+            <FontAwesomeIcon className="p-2 align-middle" icon={faTags} />
+            <span className="p-1 text-left">Marca: {marca}</span>
+          </div>
+        )}
+        {!!largo_efectivo && (
+          <div className="flex">
+            <FontAwesomeIcon
+              className="p-2 align-middle"
+              icon={faUpRightAndDownLeftFromCenter}
+            />
+
+            <span className="p-1 text-left">
+              {separador(largo_efectivo)} largo estándar.
+            </span>
+          </div>
+        )}
+        {!!largo_estandar && (
+          <div className="flex">
+            <FontAwesomeIcon
+              className="p-2 align-middle"
+              icon={faUpRightAndDownLeftFromCenter}
+            />
+            <span className="p-1 text-left">
+              {separador(largo_estandar)} largo estándar.
+            </span>
+          </div>
+        )}
+        {!!ancho_efectivo && (
+          <div className="flex">
+            <FontAwesomeIcon className="p-2 align-middle" icon={faLeftRight} />
+            <span className="p-1 text-left">
+              {separador(ancho_efectivo)} ancho efectivo.
+            </span>
+          </div>
+        )}
+        {!!espesor && (
+          <div className="flex">
+            <FontAwesomeIcon
+              className="p-2 align-middle"
+              icon={faDownLeftAndUpRightToCenter}
+            />
+            <span className="p-1 text-left">
+              Espesor disponible: {separador(espesor)} pulgadas.
+            </span>
+          </div>
+        )}
+        {!!calibre && (
+          <div className="flex">
+            <FontAwesomeIcon
+              className="p-2 align-middle"
+              icon={faDownLeftAndUpRightToCenter}
+            />
+            <span className="p-1 text-left">
+              Calibre disponible: {separador(calibre)}
+            </span>
+          </div>
+        )}
+        {!!contenido && (
+          <div className="flex">
+            <FontAwesomeIcon className="p-2 align-middle" icon={faFlask} />
+            <span className="p-1 text-left">{contenido}</span>
+          </div>
+        )}
+        {!!presentacion && (
+          <div className="flex">
+            <FontAwesomeIcon className="p-2 align-middle" icon={faBoxOpen} />
+            <span className="p-1 text-left">{presentacion}</span>
+          </div>
+        )}
+        {!!entrega && (
+          <div className="flex">
+            <FontAwesomeIcon className="p-2 align-middle" icon={faTruckFast} />
+            <span className="p-1 text-left">Disponibilidad: {entrega}</span>
+          </div>
+        )}
+        {!!otros && (
+          <div className="flex">
+            <FontAwesomeIcon className="p-2 align-middle" icon={faIndustry} />
+            <span className="p-1 text-left">{otros}</span>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
