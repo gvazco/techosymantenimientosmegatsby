@@ -9,7 +9,6 @@ import {
   faUpRightAndDownLeftFromCenter,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { StaticImage } from "gatsby-plugin-image";
 import React from "react";
 
 export const ProductFeatures = ({ productFeatures }) => {

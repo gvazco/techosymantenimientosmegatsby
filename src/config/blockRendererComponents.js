@@ -18,6 +18,7 @@ import {
 import { GatsbyImage } from "gatsby-plugin-image";
 import numeral from "numeral";
 import { ProductFeatures } from "../components/ProductFeatures/ProductFeatures";
+import { CallToActionExtButton } from "../components/CallToActionExtButton";
 
 export const blockRendererComponents = (block) => {
   switch (block.name) {
@@ -140,6 +141,22 @@ export const blockRendererComponents = (block) => {
         </div>
       );
     }
+    case "tym/ctaexternal": {
+      // console.log("EXTERNAL: ", block);
+      const alignMap = {
+        left: "text-left",
+        center: "text-center",
+        right: "text-right",
+      };
+      return (
+        <div key={block.id} className={alignMap[block.attributes.data.align]}>
+          <CallToActionExtButton
+            destination={block.attributes.data.destination.url}
+            label={block.attributes.data.label}
+          />
+        </div>
+      );
+    }
     case "core/media-text": {
       return (
         <MediaText
@@ -154,6 +171,7 @@ export const blockRendererComponents = (block) => {
         </MediaText>
       );
     }
+
     default:
       return null;
   }

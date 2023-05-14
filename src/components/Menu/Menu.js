@@ -141,15 +141,17 @@ export const Menu = () => {
               </Modal>
             </div>
 
-            <CallToActionButton
-              label={
-                data.wp.acfOptionsMainMenu.mainMenu.callToActionButton.label
-              }
-              destination={
-                data.wp.acfOptionsMainMenu.mainMenu.callToActionButton
-                  .destination.uri
-              }
-            />
+            <div className="hidden lg:block">
+              <CallToActionButton
+                label={
+                  data.wp.acfOptionsMainMenu.mainMenu.callToActionButton.label
+                }
+                destination={
+                  data.wp.acfOptionsMainMenu.mainMenu.callToActionButton
+                    .destination.uri
+                }
+              />
+            </div>
           </div>
         </div>
 
