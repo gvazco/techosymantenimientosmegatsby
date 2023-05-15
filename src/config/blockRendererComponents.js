@@ -19,6 +19,7 @@ import { GatsbyImage } from "gatsby-plugin-image";
 import numeral from "numeral";
 import { ProductFeatures } from "../components/ProductFeatures/ProductFeatures";
 import { CallToActionExtButton } from "../components/CallToActionExtButton";
+import SimpleSlider from "../components/SimpleSlider.js/SimpleSlider";
 
 export const blockRendererComponents = (block) => {
   switch (block.name) {
@@ -60,7 +61,7 @@ export const blockRendererComponents = (block) => {
       );
     }
     case "acf/proyectsearch": {
-      console.log("PROYECT: ", block);
+      // console.log("PROYECT: ", block);
       return (
         <ProyectSearch
           key={block.id}
@@ -70,7 +71,7 @@ export const blockRendererComponents = (block) => {
       );
     }
     case "acf/productsearch": {
-      console.log("PODUCT: ", block);
+      // console.log("PODUCT: ", block);
       return (
         <ProductSearch
           key={block.id}
@@ -80,7 +81,7 @@ export const blockRendererComponents = (block) => {
       );
     }
     case "acf/productfeatures": {
-      console.log("PODUCT FEATURES: ", block);
+      // console.log("PODUCT FEATURES: ", block);
       return (
         <ProductFeatures
           key={block.id}
@@ -91,7 +92,7 @@ export const blockRendererComponents = (block) => {
       );
     }
     case "acf/postsearch": {
-      console.log("POST: ", block);
+      // console.log("POST: ", block);
       return (
         <PostSearch
           key={block.id}
@@ -113,7 +114,7 @@ export const blockRendererComponents = (block) => {
       );
     }
     case "core/image": {
-      console.log("IMAGE: ", block);
+      // console.log("IMAGE: ", block);
       return (
         <figure key={block.id} className={getClasses(block)}>
           <GatsbyImage
@@ -170,6 +171,22 @@ export const blockRendererComponents = (block) => {
           <BlockRenderer blocks={block.innerBlocks} />
         </MediaText>
       );
+    }
+    case "core/group": {
+      console.log("GROUP: ", block);
+      const isFrontSlider = block.attributes.className;
+
+      if (isFrontSlider === "frontSlider") {
+        return (
+          <SimpleSlider
+            key={block.id}
+            title={block.innerBlocks[0].originalContent}
+          >
+            <BlockRenderer blocks={block.innerBlocks[1].innerBlocks} />
+          </SimpleSlider>
+        );
+      }
+      return;
     }
 
     default:

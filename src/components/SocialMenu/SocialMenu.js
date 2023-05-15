@@ -28,7 +28,7 @@ export const SocialMenu = () => {
       }
     }
   `);
-  console.log("SOCIAL MENU DATA: ", data);
+  // console.log("SOCIAL MENU DATA: ", data);
   const { socialItems } = data.wp.acfOptionsSocialMenu.socialMenu;
 
   const [selectedItem, setSelectedItem] = useState(-1);

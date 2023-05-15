@@ -73,7 +73,7 @@ exports.createPages = async ({ actions, graphql }) => {
       graphql,
       coreMediaText: true,
       coreImage: true,
-      coreCover: true,
+      coreCover: true
     });
 
     createPage({

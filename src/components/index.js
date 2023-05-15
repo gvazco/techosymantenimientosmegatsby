@@ -8,3 +8,4 @@ export * from "./ProyectSearch";
 export * from "./ProductSearch";
 export * from "./PostSearch";
 export * from "./ContactForm7";
+export * from "./SimpleSlider.js/index.js";
