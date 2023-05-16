@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { GatsbyImage } from "gatsby-plugin-image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -13,6 +13,27 @@ const SimpleSlider = ({ title, children }) => {
   }
 
   const content = children.props.blocks;
+  const [touchStart, setTouchStart] = useState(0);
+  const [touchEnd, setTouchEnd] = useState(0);
+  const contentRef = useRef(null);
+
+  const handleTouchStart = (e) => {
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+  const handleTouchMove = (e) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+  const handleTouchEnd = () => {
+    const touchDistance = touchStart - touchEnd;
+    if (touchDistance > 50) {
+      scrollRight();
+    } else if (touchDistance < -50) {
+      scrollLeft();
+    }
+    setTouchStart(0);
+    setTouchEnd(0);
+  };
+
   const scrollLeft = () => {
     document.getElementById("content").scrollLeft -= 340;
   };
@@ -31,7 +52,7 @@ const SimpleSlider = ({ title, children }) => {
         />
       </div>
       <div className="bottom flex flex-col items-center justify-center p-3">
-        <h3 className=" title text-center my-1 text-sm font-semibold">
+        <h3 className=" title my-1 text-center text-sm font-semibold">
           {eliminarTags(item.innerBlocks[1].originalContent)}
         </h3>
         <CallToActionButton
@@ -63,9 +84,14 @@ const SimpleSlider = ({ title, children }) => {
             <FontAwesomeIcon icon={faChevronRight} />
           </button>
         </div>
+
         <div
           id="content"
-          className="carousel scrollbar-hide flex items-center justify-start overflow-x-auto overflow-x-hidden touch-pan-x scroll-smooth "
+          ref={contentRef}
+          className="carousel scrollbar-hide flex touch-pan-x items-center justify-start overflow-x-auto overflow-x-hidden scroll-smooth"
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
         >
           {cardItem}
         </div>

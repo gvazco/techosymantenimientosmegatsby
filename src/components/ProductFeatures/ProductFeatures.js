@@ -43,7 +43,7 @@ export const ProductFeatures = ({ productFeatures }) => {
     <div className="mx-auto my-10 flex w-full flex-col justify-center bg-transparent text-center text-slate-900 lg:max-w-5xl lg:flex-row lg:justify-around">
       <div className="my-auto flex flex-col align-middle">
         <div>
-          <h2 className="text-left text-4xl mb-3">{title}</h2>
+          <h2 className="text-left text-2xl md:text-4xl mb-3">{title}</h2>
         </div>
         {!existencia && (
           <div className="relative flex w-full">
