@@ -35,18 +35,18 @@ const SimpleSlider = ({ title, children }) => {
   };
 
   const scrollLeft = () => {
-    contentRef.current.scrollLeft -= 340;
+    contentRef.current.scrollLeft -= 330;
   };
   const scrollRight = () => {
-    contentRef.current.scrollLeft += 340;
+    contentRef.current.scrollLeft += 330;
   };
 
   const cardItem = content.map((item, index) => (
     <div
       key={index}
-      className="card mr-6 h-[437px] w-[350px] bg-slate-50 shadow-lg"
+      className="card mr-6 h-[417px] w-[320px] md:h-[437px] md:w-[350px] bg-slate-50 shadow-lg"
     >
-      <div className="h-[320px] w-[320px] object-cover p-2">
+      <div className="h-[300px] w-[300px] md:h-[320px] md:w-[320px] object-cover p-2">
         <GatsbyImage
           alt={item.id}
           image={item.innerBlocks[0].attributes.gatsbyImage}
