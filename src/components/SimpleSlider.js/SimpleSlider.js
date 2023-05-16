@@ -88,7 +88,7 @@ const SimpleSlider = ({ title, children }) => {
 
         <div
           ref={contentRef}
-          className="carousel scrollbar-hide flex touch-pan-x items-center justify-start overflow-x-auto overflow-x-hidden scroll-smooth"
+          className="carousel scrollbar-hide flex touch-pan-x touch-pan-y items-center justify-start overflow-x-auto overflow-x-hidden scroll-smooth"
           onTouchStart={handleTouchStart}
           onTouchMove={handleTouchMove}
           onTouchEnd={handleTouchEnd}
