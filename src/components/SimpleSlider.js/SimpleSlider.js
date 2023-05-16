@@ -44,7 +44,7 @@ const SimpleSlider = ({ title, children }) => {
   const cardItem = content.map((item, index) => (
     <div
       key={index}
-      className="card mr-6 h-[440px] w-[320px] md:h-[460px] md:w-[350px] bg-slate-50 shadow-lg"
+      className="card mr-6 h-[445px] w-[320px] md:h-[465px] md:w-[350px] bg-slate-50 shadow-lg"
     >
       <div className="h-[300px] w-[300px] md:h-[320px] md:w-[320px] object-cover p-2">
         <GatsbyImage
