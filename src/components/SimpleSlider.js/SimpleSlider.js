@@ -44,7 +44,7 @@ const SimpleSlider = ({ title, children }) => {
   const cardItem = content.map((item, index) => (
     <div
       key={index}
-      className="card mr-6 h-[417px] w-[320px] md:h-[437px] md:w-[350px] bg-slate-50 shadow-lg"
+      className="card mr-6 h-[440px] w-[320px] md:h-[460px] md:w-[350px] bg-slate-50 shadow-lg"
     >
       <div className="h-[300px] w-[300px] md:h-[320px] md:w-[320px] object-cover p-2">
         <GatsbyImage
@@ -53,7 +53,7 @@ const SimpleSlider = ({ title, children }) => {
         />
       </div>
       <div className="bottom flex flex-col items-center justify-center p-3">
-        <h3 className=" title my-1 text-center text-sm font-semibold">
+        <h3 className="title my-1 text-center text-base font-semibold">
           {eliminarTags(item.innerBlocks[1].originalContent)}
         </h3>
         <CallToActionButton
