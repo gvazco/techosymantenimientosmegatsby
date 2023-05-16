@@ -35,11 +35,12 @@ const SimpleSlider = ({ title, children }) => {
   };
 
   const scrollLeft = () => {
-    document.getElementById("content").scrollLeft -= 340;
+    contentRef.current.scrollLeft -= 340;
   };
   const scrollRight = () => {
-    document.getElementById("content").scrollLeft += 340;
+    contentRef.current.scrollLeft += 340;
   };
+
   const cardItem = content.map((item, index) => (
     <div
       key={index}
@@ -86,7 +87,6 @@ const SimpleSlider = ({ title, children }) => {
         </div>
 
         <div
-          id="content"
           ref={contentRef}
           className="carousel scrollbar-hide flex touch-pan-x items-center justify-start overflow-x-auto overflow-x-hidden scroll-smooth"
           onTouchStart={handleTouchStart}

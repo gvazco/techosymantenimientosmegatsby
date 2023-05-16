@@ -176,10 +176,19 @@ export const blockRendererComponents = (block) => {
       console.log("GROUP: ", block);
       const isFrontSlider = block.attributes.className;
 
-      if (isFrontSlider === "frontSlider") {
+      if (isFrontSlider === "panelSlider") {
         return (
           <SimpleSlider
-            key={block.id}
+            key={block.id + 1}
+            title={block.innerBlocks[0].originalContent}
+          >
+            <BlockRenderer blocks={block.innerBlocks[1].innerBlocks} />
+          </SimpleSlider>
+        );
+      } else if (isFrontSlider === "accesoriosSlider") {
+        return (
+          <SimpleSlider
+            key={block.id + 1}
             title={block.innerBlocks[0].originalContent}
           >
             <BlockRenderer blocks={block.innerBlocks[1].innerBlocks} />

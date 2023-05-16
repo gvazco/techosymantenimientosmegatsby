@@ -138,11 +138,9 @@ export const ProductSearch = ({ style, className }) => {
       if (productIndex === -1) {
         // si el producto no está en el carrito, lo agregamos
         cartItems.push(product);
-        alert("Genial, el producto se agrego a la lista...");
         handleShowToast();
       } else {
         // si el producto ya está en el carrito
-        alert("Opps! Este producto ya esta en la lista...");
         handleShowErrorToast();
       }
 
@@ -224,10 +222,10 @@ export const ProductSearch = ({ style, className }) => {
             >
               {!!product.featuredImage?.node?.sourceUrl && (
                 <img
-                  className="h-[300px] w-full object-cover"
+                  className="h-[450px] w-full object-cover"
                   src={product.featuredImage.node.sourceUrl}
                   alt=""
-                  style={{ objectFit: "cover", maxHeight: "300px" }}
+                  style={{ objectFit: "cover", maxHeight: "350px" }}
                 />
               )}
 
