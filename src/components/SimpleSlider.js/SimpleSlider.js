@@ -5,6 +5,7 @@ import {
   faChevronLeft,
   faChevronRight,
 } from "@fortawesome/free-solid-svg-icons";
+import { CallToActionButton } from "../CallToActionButton";
 
 const SimpleSlider = ({ title, children }) => {
   function eliminarTags(html) {
@@ -13,32 +14,37 @@ const SimpleSlider = ({ title, children }) => {
 
   const content = children.props.blocks;
   const scrollLeft = () => {
-    document.getElementById("content").scrollLeft -= 350;
+    document.getElementById("content").scrollLeft -= 340;
   };
   const scrollRight = () => {
-    document.getElementById("content").scrollLeft += 350;
+    document.getElementById("content").scrollLeft += 340;
   };
   const cardItem = content.map((item, index) => (
     <div
       key={index}
-      className="card mr-6 h-[400px] w-[400px] rounded-lg bg-slate-50 shadow-lg"
+      className="card mr-6 h-[437px] w-[350px] bg-slate-50 shadow-lg"
     >
-      <div className="h-[325px] w-[325px] object-cover p-2">
+      <div className="h-[320px] w-[320px] object-cover p-2">
         <GatsbyImage
           alt={item.id}
           image={item.innerBlocks[0].attributes.gatsbyImage}
         />
       </div>
-      <div className="bottom bg- flex flex-col items-start justify-center p-3">
-        <div className=" title my-1 text-xs font-semibold">
+      <div className="bottom flex flex-col items-center justify-center p-3">
+        <h3 className=" title text-center my-1 text-sm font-semibold">
           {eliminarTags(item.innerBlocks[1].originalContent)}
-        </div>
+        </h3>
+        <CallToActionButton
+          fullWidth
+          label="Mostrar Detalles"
+          destination={item.innerBlocks[2].attributes.data.destination}
+        />
       </div>
     </div>
   ));
 
   return (
-    <div className="alignwide are-vertically-aligned-center">
+    <div className="alignwide are-vertically-aligned-center mb-2">
       <div className="relative">
         <h3 className="py-4 text-left text-xl font-bold">
           {eliminarTags(title)}
@@ -59,7 +65,7 @@ const SimpleSlider = ({ title, children }) => {
         </div>
         <div
           id="content"
-          className="carousel scrollbar-hide flex items-center justify-start overflow-x-auto overflow-x-hidden scroll-smooth "
+          className="carousel scrollbar-hide flex items-center justify-start overflow-x-auto overflow-x-hidden touch-pan-x scroll-smooth "
         >
           {cardItem}
         </div>
