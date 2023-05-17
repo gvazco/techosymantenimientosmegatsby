@@ -67,7 +67,7 @@
   }
 
   .btn-secondary {
-    @apply cursor-pointer rounded-sm bg-slate-300 py-2 px-4 text-center text-sm font-bold uppercase !text-white no-underline transition-colors hover:bg-slate-200 md:text-base;
+    @apply cursor-pointer rounded-sm bg-slate-300 py-2 px-4 text-center text-sm font-bold uppercase !text-slate-900 no-underline transition-colors hover:bg-slate-200 md:text-base;
   }
 
   .cart_p {

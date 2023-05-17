@@ -55,10 +55,11 @@ export const BudgetList = () => {
           </li>
         ))}
         <hr className="mt-3"></hr>
-        <div className="flex flex-row justify-between">
-          <Link to="/store/all-products" className="btn-secondary">
-           Volver
+        <div className="flex flex-row justify-between items-end">
+          <Link to="/store/all-products" className="btn-secondary mr-3">
+            Volver
           </Link>
+
           {cartItems != "" && (
             <>
               <div className="mt-3 flex flex-row justify-between">
