@@ -1,30 +1,46 @@
+import React, { useState, useEffect } from "react";
 import { Link } from "gatsby";
-import React, { useState } from "react";
 
 export const BudgetList = () => {
-  const [cartItems, setCartItems] = useState(
-    JSON.parse(localStorage.getItem("cart")) || []
-  );
+  const [isBrowser, setIsBrowser] = useState(false);
+  const [cartItems, setCartItems] = useState([]);
+
+  useEffect(() => {
+    setIsBrowser(true);
+  }, []);
+
+  useEffect(() => {
+    if (isBrowser) {
+      const cartItemsFromLocalStorage = JSON.parse(
+        localStorage.getItem("cart") || "[]"
+      );
+      setCartItems(cartItemsFromLocalStorage);
+    }
+  }, [isBrowser]);
 
   const handleRemoveItem = (index) => {
     const updatedCartItems = [...cartItems];
     updatedCartItems.splice(index, 1);
     setCartItems(updatedCartItems);
-    localStorage.setItem("cart", JSON.stringify(updatedCartItems));
+    if (isBrowser) {
+      localStorage.setItem("cart", JSON.stringify(updatedCartItems));
+    }
   };
 
   const handleClearCart = () => {
     setCartItems([]);
-    localStorage.removeItem("cart");
+    if (isBrowser) {
+      localStorage.removeItem("cart");
+    }
   };
 
   return (
     <div>
-      <h2 className="text-xl mt-6">Añadir a la cotización:</h2>
+      <h2 className="mt-6 text-xl">Añadir a la cotización:</h2>
       <div className="mx-auto flex min-h-full w-full">
         <ul className="mt-6 border border-slate-300 p-3 text-right">
           {/* Exist products in Cart */}
-          {cartItems == "" && (
+          {cartItems.length === 0 && (
             <li>
               <h3 className="flex flex-row items-center text-sm font-bold">
                 ¡Ooops! No hay productos en su carrito.
@@ -35,12 +51,12 @@ export const BudgetList = () => {
           {cartItems.map((item, index) => (
             <li
               key={index}
-              className="flex flex-row items-center justify-between border border-solid border-slate-300 p-1 mb-3"
+              className="mb-3 flex flex-row items-center justify-between border border-solid border-slate-300 p-1"
             >
               {!!item.featuredImage?.node?.sourceUrl && (
                 <img
                   className="mr-3 h-[50px] w-[50px] object-cover"
-                  src={item.featuredImage.node.sourceUrl}
+                  src={item.featuredImage?.node?.sourceUrl}
                   alt=""
                   style={{ objectFit: "cover", maxHeight: "50px" }}
                 />
@@ -62,7 +78,7 @@ export const BudgetList = () => {
               Volver
             </Link>
 
-            {cartItems != "" && (
+            {cartItems === 0 && (
               <>
                 <div className="mt-3 flex flex-row justify-between">
                   <button onClick={handleClearCart} className="btn-delete mr-3">
