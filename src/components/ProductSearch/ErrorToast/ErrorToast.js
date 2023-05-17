@@ -24,7 +24,7 @@ export default function ErrorToast({ message, onClose, timeout = 5000 }) {
     <div
       className={`${
         show ? "scale-100 opacity-100" : "scale-100 opacity-0"
-      } fixed top-6 right-6 z-50 transform bg-teal-500 text-white transition-all duration-300`}
+      } fixed top-1 right-1 z-50 transform bg-teal-500 text-white transition-all duration-300 md:top-6 md:right-6`}
     >
       <div className="flex w-full max-w-sm items-center justify-between rounded-lg bg-white px-4 py-2 shadow-md">
         <p className="text-sm font-medium text-gray-600">{message}</p>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-
+import { Link } from "gatsby";
 
 export default function SuccessToast({ message, onClose, timeout = 5000 }) {
   const [show, setShow] = useState(true);
@@ -25,15 +25,17 @@ export default function SuccessToast({ message, onClose, timeout = 5000 }) {
     <div
       className={`${
         show ? "scale-100 opacity-100" : "scale-100 opacity-0"
-      } fixed top-6 right-6 z-50 transform transition-all duration-300 bg-teal-500 text-white`}
+      } fixed top-1 right-1 z-50 transform bg-teal-500 text-white transition-all duration-300 md:top-6 md:right-6`}
     >
       <div className="flex w-full max-w-sm items-center justify-between rounded-lg bg-white px-4 py-2 shadow-md">
         <p className="text-sm font-medium text-gray-600">{message}</p>
-        <button
+        <Link
+          to="/budget"
           className="text-gray-600 hover:text-gray-800 focus:text-gray-800 focus:outline-none"
           onClick={handleClose}
-        >Close
-        </button>
+        >
+          Close
+        </Link>
       </div>
     </div>
   );

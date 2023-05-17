@@ -14,12 +14,13 @@ import {
   ProyectSearch,
   ProductSearch,
   PostSearch,
+  BudgetList,
+  SimpleSlider
 } from "../components";
 import { GatsbyImage } from "gatsby-plugin-image";
 import numeral from "numeral";
 import { ProductFeatures } from "../components/ProductFeatures/ProductFeatures";
 import { CallToActionExtButton } from "../components/CallToActionExtButton";
-import SimpleSlider from "../components/SimpleSlider.js/SimpleSlider";
 
 export const blockRendererComponents = (block) => {
   switch (block.name) {
@@ -158,6 +159,10 @@ export const blockRendererComponents = (block) => {
         </div>
       );
     }
+    case "tym/budgetlist": {
+      console.log("BUDGET: ", block);
+      return <BudgetList key={block.id} />;
+    }
     case "core/media-text": {
       return (
         <MediaText
@@ -173,22 +178,13 @@ export const blockRendererComponents = (block) => {
       );
     }
     case "core/group": {
-      console.log("GROUP: ", block);
-      const isFrontSlider = block.attributes.className;
+      // console.log("GROUP: ", block);
+      const customClass = block.attributes.className;
 
-      if (isFrontSlider === "panelSlider") {
+      if (customClass === "productsSlider") {
         return (
           <SimpleSlider
-            key={block.id + 1}
-            title={block.innerBlocks[0].originalContent}
-          >
-            <BlockRenderer blocks={block.innerBlocks[1].innerBlocks} />
-          </SimpleSlider>
-        );
-      } else if (isFrontSlider === "accesoriosSlider") {
-        return (
-          <SimpleSlider
-            key={block.id + 1}
+            key={block.id}
             title={block.innerBlocks[0].originalContent}
           >
             <BlockRenderer blocks={block.innerBlocks[1].innerBlocks} />

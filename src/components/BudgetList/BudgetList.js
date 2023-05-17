@@ -1,7 +1,8 @@
-import React from "react";
+import { Link } from "gatsby";
+import React, { useState } from "react";
 
-export const CartList = () => {
-  const [cartItems, setCartItems] = React.useState(
+export const BudgetList = () => {
+  const [cartItems, setCartItems] = useState(
     JSON.parse(localStorage.getItem("cart")) || []
   );
 
@@ -18,8 +19,8 @@ export const CartList = () => {
   };
 
   return (
-    <div className="mx-auto mt-3 flex min-h-full max-w-[1200px]">
-      <ul className="border border-slate-300 p-3 text-right">
+    <div className="mx-auto my-auto flex min-h-full max-w-[1200px]">
+      <ul className="mt-6 border border-slate-300 p-3 text-right">
         {/* Exist products in Cart */}
         {cartItems == "" && (
           <li>
@@ -32,7 +33,7 @@ export const CartList = () => {
         {cartItems.map((item, index) => (
           <li
             key={index}
-            className="flex flex-row items-center md:justify-between"
+            className="flex flex-row items-center justify-between border border-solid border-slate-300 p-1"
           >
             {!!item.featuredImage?.node?.sourceUrl && (
               <img
@@ -42,10 +43,10 @@ export const CartList = () => {
                 style={{ objectFit: "cover", maxHeight: "50px" }}
               />
             )}
-            <div className="flex flex-col items-center  md:flex-row">
-              <p className="mr-3 text-sm md:text-base">{item.title}</p>
+            <div className="flex flex-col md:flex-row md:items-center ">
+              <p className="cart_p mr-3 text-sm md:text-base">{item.title}</p>
               <button
-                className="btn-delete bg-red-600 hover:bg-red-500"
+                className="btn-delete"
                 onClick={() => handleRemoveItem(index)}
               >
                 Eliminar
@@ -53,20 +54,24 @@ export const CartList = () => {
             </div>
           </li>
         ))}
-
-        {cartItems != "" && (
-          <>
-            <hr className="mt-3"></hr>
-            <div className="mt-3 flex flex-row justify-between">
-              <button onClick={handleClearCart} className="btn-delete">
-                Limpiar
-              </button>
-              <button className="btn-delete bg-teal-600 hover:bg-teal-500">
-                Continuar
-              </button>
-            </div>
-          </>
-        )}
+        <hr className="mt-3"></hr>
+        <div className="flex flex-row justify-between">
+          <Link to="/store/all-products" className="btn-secondary">
+           Volver
+          </Link>
+          {cartItems != "" && (
+            <>
+              <div className="mt-3 flex flex-row justify-between">
+                <button onClick={handleClearCart} className="btn-delete mr-3">
+                  Limpiar
+                </button>
+                <button className="btn-delete bg-teal-600 hover:bg-teal-500">
+                  Continuar
+                </button>
+              </div>
+            </>
+          )}
+        </div>
       </ul>
     </div>
   );

@@ -7,7 +7,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { CallToActionButton } from "../CallToActionButton";
 
-const SimpleSlider = ({ title, children }) => {
+export const SimpleSlider = ({ title, children }) => {
   function eliminarTags(html) {
     return html.replace(/<.*?>/g, "");
   }
@@ -59,7 +59,7 @@ const SimpleSlider = ({ title, children }) => {
         <CallToActionButton
           fullWidth
           label="Mostrar Detalles"
-          destination={item.innerBlocks[2].attributes.data.destination}
+          destination={`/productos${item.innerBlocks[2].attributes.data.destination}`}
         />
       </div>
     </div>
@@ -99,5 +99,3 @@ const SimpleSlider = ({ title, children }) => {
     </div>
   );
 };
-
-export default SimpleSlider;

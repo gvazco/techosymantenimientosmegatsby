@@ -4,7 +4,7 @@ import { CallToActionButton } from "../CallToActionButton";
 import React, { useEffect, useState } from "react";
 import {
   faBars,
-  faCartArrowDown,
+  faCartFlatbed,
   faPhoneAlt,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -15,8 +15,6 @@ import {
   faWhatsapp,
   faYoutube,
 } from "@fortawesome/free-brands-svg-icons";
-import { CartList } from "./CartList/CartList";
-import Modal from "./CartList/Modal";
 
 export const Menu = () => {
   const data = useStaticQuery(graphql`
@@ -66,7 +64,7 @@ export const Menu = () => {
   const { socialItems } = data.wp.acfOptionsSocialMenu.socialMenu;
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false); // Agrega el estado local para controlar si el menú mobile está abierto o cerrado
   const [selectedItem, setSelectedItem] = useState(-1); // Inicializar con un valor por defecto
-  const [isOpen, setIsOpen] = useState(false);
+
   const [cartItems, setCartItems] = useState([]);
   const [cartCount, setCartCount] = useState(0);
   // Función de manejo de eventos para abrir/cerrar el menú mobile
@@ -74,13 +72,6 @@ export const Menu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
-  function openModal() {
-    setIsOpen(true);
-  }
-
-  function closeModal() {
-    setIsOpen(false);
-  }
 
   useEffect(() => {
     const storedCartItems = JSON.parse(localStorage.getItem("cart"));
@@ -122,9 +113,11 @@ export const Menu = () => {
             ))}
 
             <div>
-              <button onClick={openModal} className="ml-1 mr-6">
+              <button className="ml-1 mr-6">
                 <div className="flex flex-row">
-                  <FontAwesomeIcon icon={faCartArrowDown} />
+                  <Link className="text-slate-100" to="/budget">
+                    <FontAwesomeIcon icon={faCartFlatbed} />
+                  </Link>
                   {cartCount >= 0 && (
                     <span className="ml-1 inline-flex h-5 w-5 items-center justify-center rounded-full bg-red-600 text-xs font-bold text-white">
                       {cartCount}
@@ -132,13 +125,6 @@ export const Menu = () => {
                   )}
                 </div>
               </button>
-              <Modal isOpen={isOpen} onClose={closeModal}>
-                <h2 className="mb-4 text-lg font-bold">
-                  Añadir a la cotización:
-                </h2>
-                <CartList />
-                <button onClick={closeModal}>Cerrar</button>
-              </Modal>
             </div>
 
             <div className="hidden lg:block">
@@ -158,23 +144,18 @@ export const Menu = () => {
         <div className="flex flex-row items-center justify-between text-[1.3rem] md:hidden">
           <span className="sr-only">Abrir carrito</span>
           <div>
-            <button onClick={openModal} className="mx-7">
+            <button className="mx-5">
               <div className="flex flex-row">
-                <FontAwesomeIcon icon={faCartArrowDown} />
-                {cartCount > 0 && (
+                <Link className="text-slate-100" to="/budget">
+                  <FontAwesomeIcon icon={faCartFlatbed} />
+                </Link>
+                {cartCount >= 0 && (
                   <span className="ml-1 inline-flex h-5 w-5 items-center justify-center rounded-full bg-red-600 text-xs font-bold text-white">
                     {cartCount}
                   </span>
                 )}
               </div>
             </button>
-            <Modal isOpen={isOpen} onClose={closeModal}>
-              <h2 className="mb-4 text-lg font-bold">
-                Añadir a la cotización:
-              </h2>
-              <CartList />
-              <button onClick={closeModal}>Cerrar</button>
-            </Modal>
           </div>
           <button
             type="button"
