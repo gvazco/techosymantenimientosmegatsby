@@ -23,6 +23,7 @@ import ErrorToast from "./ErrorToast/ErrorToast";
 
 export const ProductSearch = ({ style, className }) => {
   const [showDescription, setShowDescription] = useState(false); // agregar estado
+  const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 6;
   let page = 1;
   let defaultType = "";
@@ -150,6 +151,7 @@ export const ProductSearch = ({ style, className }) => {
 
   };
 
+
   function handleShowToast() {
     setShowSuccessToast(true);
   }
@@ -165,6 +167,18 @@ export const ProductSearch = ({ style, className }) => {
   function handleCloseErrorToast() {
     setShowErrorToast(false);
   }
+
+  const handlePrevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
 
   const separador = (array) => {
     if (array.length === 0) return "";
@@ -207,7 +221,7 @@ export const ProductSearch = ({ style, className }) => {
             </select>
           </div>
           <div className="ml-0 mt-2 flex sm:ml-5 sm:scroll-mt-0.5">
-            <button type="submit" className="btn w-full mt-auto mb-[2px] ">
+            <button type="submit" className="btn mt-auto mb-[2px] w-full ">
               Buscar
             </button>
           </div>
@@ -440,9 +454,13 @@ export const ProductSearch = ({ style, className }) => {
       )}
       {!!totalResults && (
         <div className="my-4 flex items-center justify-center gap-2">
-          {Array.from({ length: totalPages }).map((_, i) => {
-            return <PageNumber key={i} pageNumber={i + 1} />;
-          })}
+          <button onClick={handlePrevPage}>&lt;</button>
+          {Array.from({ length: totalPages })
+            .slice(currentPage - 1, currentPage + 4) // Muestra máximo 5 botones
+            .map((_, i) => {
+              return <PageNumber key={i} pageNumber={i + currentPage} />;
+            })}
+          <button onClick={handleNextPage}>&gt;</button>
         </div>
       )}
 

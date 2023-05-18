@@ -78,7 +78,7 @@ export const BudgetList = () => {
               Volver
             </Link>
 
-            {cartItems === 0 && (
+            {cartItems.lenght !== 0 && (
               <>
                 <div className="mt-3 flex flex-row justify-between">
                   <button onClick={handleClearCart} className="btn-delete mr-3">
