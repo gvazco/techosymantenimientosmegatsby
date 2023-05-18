@@ -144,13 +144,10 @@ export const ProductSearch = ({ style, className }) => {
         // si el producto ya está en el carrito
         handleShowErrorToast();
       }
-
     });
 
     localStorage.setItem("cart", JSON.stringify(cartItems));
-
   };
-
 
   function handleShowToast() {
     setShowSuccessToast(true);
@@ -454,13 +451,20 @@ export const ProductSearch = ({ style, className }) => {
       )}
       {!!totalResults && (
         <div className="my-4 flex items-center justify-center gap-2">
-          <button onClick={handlePrevPage}>&lt;</button>
+          <button onClick={handlePrevPage} disabled={currentPage === 1}>
+            &lt;
+          </button>
           {Array.from({ length: totalPages })
             .slice(currentPage - 1, currentPage + 4) // Muestra máximo 5 botones
             .map((_, i) => {
               return <PageNumber key={i} pageNumber={i + currentPage} />;
             })}
-          <button onClick={handleNextPage}>&gt;</button>
+          <button
+            onClick={handleNextPage}
+            disabled={currentPage + 4 >= totalPages}
+          >
+            &gt;
+          </button>
         </div>
       )}
 
