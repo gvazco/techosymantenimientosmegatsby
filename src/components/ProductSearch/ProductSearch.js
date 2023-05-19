@@ -129,10 +129,9 @@ export const ProductSearch = ({ style, className }) => {
       // Si products no es una lista, lo convertimos en una lista
       products = [products];
     }
-
     products.forEach((product) => {
-      console.log(product);
-      console.log(cartItems);
+      // console.log(product);
+      // console.log(cartItems);
       const productIndex = cartItems.findIndex(
         (item) => item.databaseId === product.databaseId
       );
@@ -147,6 +146,28 @@ export const ProductSearch = ({ style, className }) => {
     });
 
     localStorage.setItem("cart", JSON.stringify(cartItems));
+  };
+
+  const handleAddToStorage = (products) => {
+    const storageItems = JSON.parse(localStorage.getItem("storageItems")) || [];
+
+    if (!Array.isArray(products)) {
+      // Si products no es una lista, lo convertimos en una lista
+      products = [products];
+    }
+    products.forEach((product) => {
+      // console.log(product);
+      // console.log(storageItems);
+      const productIndex = storageItems.findIndex(
+        (item) => item.databaseId === product.databaseId
+      );
+      if (productIndex === -1) {
+        // si el producto no está en el carrito, lo agregamos
+        storageItems.push(product);
+      }
+    });
+
+    localStorage.setItem("storageItems", JSON.stringify(storageItems));
   };
 
   function handleShowToast() {
@@ -224,6 +245,18 @@ export const ProductSearch = ({ style, className }) => {
           </div>
         </form>
       </fieldset>
+
+      {loading && (
+        <div
+          class="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
+          role="status"
+        >
+          <span class="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">
+            Loading...
+          </span>
+        </div>
+      )}
+
       {!loading && !!data?.products?.nodes?.length && (
         <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
           {data.products.nodes.map((product) => (
@@ -430,6 +463,7 @@ export const ProductSearch = ({ style, className }) => {
                   fullWidth
                   label="Ver detalles"
                   destination={product.uri}
+                  onClick={() => handleAddToStorage(product)}
                 />
 
                 <button
@@ -449,6 +483,7 @@ export const ProductSearch = ({ style, className }) => {
           ))}
         </div>
       )}
+
       {!!totalResults && (
         <div className="my-4 flex items-center justify-center gap-2">
           <button onClick={handlePrevPage} disabled={currentPage === 1}>

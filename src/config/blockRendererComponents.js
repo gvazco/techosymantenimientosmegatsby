@@ -82,7 +82,7 @@ export const blockRendererComponents = (block) => {
       );
     }
     case "acf/productfeatures": {
-      // console.log("PODUCT FEATURES: ", block);
+      console.log("PODUCT FEATURES: ", block);
       return (
         <ProductFeatures
           key={block.id}
