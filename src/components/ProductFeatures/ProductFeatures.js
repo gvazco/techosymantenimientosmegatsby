@@ -20,7 +20,6 @@ export const ProductFeatures = ({ productFeatures }) => {
     ancho_efectivo,
     calibre,
     espesor,
-    existencia,
     presentacion,
     contenido,
     entrega,
@@ -30,9 +29,10 @@ export const ProductFeatures = ({ productFeatures }) => {
   } = productFeatures;
 
   const [productItem, setProductItem] = useState([]);
-
-  const localCart = JSON.parse(localStorage.getItem("cart")) || [];
-  const localItems = JSON.parse(localStorage.getItem("items")) || [];
+  const localItems =
+    typeof window !== "undefined"
+      ? JSON.parse(localStorage.getItem("items")) || []
+      : [];
 
   const filterItemsByProductId = (productId) => {
     const filteredItems = localItems.filter(
@@ -46,6 +46,7 @@ export const ProductFeatures = ({ productFeatures }) => {
     setProductItem(filteredItems);
   }, [productId]);
 
+  console.log(productItem);
 
   const handleAddToCart = (products) => {
     const cartItems = JSON.parse(localStorage.getItem("cart")) || [];
@@ -88,13 +89,6 @@ export const ProductFeatures = ({ productFeatures }) => {
         <div>
           <h2 className="mb-3 text-left text-2xl md:text-4xl">{title}</h2>
         </div>
-        {!existencia && (
-          <div className="relative flex w-full">
-            <div className="absolute inset-0 flex items-center justify-center text-2xl font-bold uppercase text-slate-200 lg:text-3xl">
-              <span className="bg-orange-500 p-3">Agotado</span>
-            </div>
-          </div>
-        )}
         {!!marca && (
           <div className="flex">
             <FontAwesomeIcon className="p-2 align-middle" icon={faTags} />
@@ -143,7 +137,7 @@ export const ProductFeatures = ({ productFeatures }) => {
             </span>
           </div>
         )}
-        {calibre !== 0 && (
+        {calibre.lenght !== 0 && (
           <div className="flex">
             <FontAwesomeIcon
               className="p-2 align-middle"
@@ -188,12 +182,14 @@ export const ProductFeatures = ({ productFeatures }) => {
             </a>
           )}
 
-          <button
-            className="btn mt-3 w-full bg-slate-900 text-slate-100 hover:bg-slate-700 md:ml-3 md:mt-0"
-            onClick={() => handleAddToCart(productItem)}
-          >
-            Añadir a Cotización
-          </button>
+          {productItem.length !== 0  && (
+            <button
+              className="btn mt-3 w-full bg-slate-900 text-slate-100 hover:bg-slate-700 md:ml-3 md:mt-0"
+              onClick={() => handleAddToCart(productItem)}
+            >
+              Añadir a Cotización
+            </button>
+          )}
         </div>
       </div>
     </div>
