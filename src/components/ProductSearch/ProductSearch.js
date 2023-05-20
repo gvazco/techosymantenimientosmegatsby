@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { useQuery, gql } from "@apollo/client";
 import numeral from "numeral";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -15,11 +15,12 @@ import {
   faTruckFast,
   faUpRightAndDownLeftFromCenter,
 } from "@fortawesome/free-solid-svg-icons";
-import { CallToActionButton } from "../CallToActionButton";
+// import { CallToActionButton } from "../CallToActionButton";
 import { PageNumber } from "./PageNumber";
 import { Link, navigate } from "gatsby";
 import SuccessToast from "./SuccessToast/SuccessToast";
 import ErrorToast from "./ErrorToast/ErrorToast";
+import { CartContext } from "../CartContext";
 
 export const ProductSearch = ({ style, className }) => {
   const [showDescription, setShowDescription] = useState(false); // agregar estado
@@ -30,6 +31,7 @@ export const ProductSearch = ({ style, className }) => {
   // let defaultMaxPrice = "";
   // let defaultMinPrice = "";
   // let defaultColor = "";
+  const { updateCartCount } = useContext(CartContext);
 
   if (typeof window !== "undefined") {
     const params = new URLSearchParams(window.location.search);
@@ -122,6 +124,17 @@ export const ProductSearch = ({ style, className }) => {
     navigate(`${window.location.pathname}?${params.toString()}`);
   };
 
+  useEffect(() => {
+    if (!loading) {
+      // Si no hay productos en el localStorage, agregarlos desde el prop
+      const products = data?.products?.nodes;
+
+      // Guardar los productos en el localStorage
+      localStorage.setItem("items", JSON.stringify(products));
+    }
+  }, [loading]);
+
+
   const handleAddToCart = (products) => {
     const cartItems = JSON.parse(localStorage.getItem("cart")) || [];
 
@@ -138,6 +151,7 @@ export const ProductSearch = ({ style, className }) => {
       if (productIndex === -1) {
         // si el producto no está en el carrito, lo agregamos
         cartItems.push(product);
+        updateCartCount();
         handleShowToast();
       } else {
         // si el producto ya está en el carrito

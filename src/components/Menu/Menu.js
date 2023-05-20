@@ -1,7 +1,7 @@
 import { graphql, Link, useStaticQuery } from "gatsby";
 import { StaticImage } from "gatsby-plugin-image";
 import { CallToActionButton } from "../CallToActionButton";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   faBars,
   faCartFlatbed,
@@ -15,6 +15,7 @@ import {
   faWhatsapp,
   faYoutube,
 } from "@fortawesome/free-brands-svg-icons";
+import CartComponent from "./CartComponent/CartComponent";
 
 export const Menu = () => {
   const data = useStaticQuery(graphql`
@@ -65,27 +66,10 @@ export const Menu = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false); // Agrega el estado local para controlar si el menú mobile está abierto o cerrado
   const [selectedItem, setSelectedItem] = useState(-1); // Inicializar con un valor por defecto
 
-  const [cartItems, setCartItems] = useState([]);
-  const [cartCount, setCartCount] = useState(0);
   // Función de manejo de eventos para abrir/cerrar el menú mobile
   const handleMobileMenuToggle = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
-
-   const updateCartCount = useCallback(() => {
-     const storedCartItems = JSON.parse(localStorage.getItem("cart"));
-     setCartItems(storedCartItems);
-
-     if (storedCartItems) {
-       setCartCount(storedCartItems.length);
-     } else {
-       setCartCount(0);
-     }
-   }, []);
-
-   useEffect(() => {
-     updateCartCount();
-   }, [updateCartCount]);
 
   return (
     <nav>
@@ -121,11 +105,10 @@ export const Menu = () => {
                   <Link className="text-slate-100" to="/budget">
                     <FontAwesomeIcon icon={faCartFlatbed} />
                   </Link>
-                  {cartCount >= 0 && (
-                    <span className="ml-1 inline-flex h-5 w-5 items-center justify-center rounded-full bg-red-600 text-xs font-bold text-white">
-                      {cartCount}
-                    </span>
-                  )}
+
+                  <span className="ml-1 inline-flex h-5 w-5 items-center justify-center rounded-full bg-red-600 text-xs font-bold text-white">
+                    <CartComponent/>
+                  </span>
                 </div>
               </button>
             </div>
@@ -152,11 +135,11 @@ export const Menu = () => {
                 <Link className="text-slate-100" to="/budget">
                   <FontAwesomeIcon icon={faCartFlatbed} />
                 </Link>
-                {cartCount >= 0 && (
+
                   <span className="ml-1 inline-flex h-5 w-5 items-center justify-center rounded-full bg-red-600 text-xs font-bold text-white">
-                    {cartCount}
+                    <CartComponent/>
                   </span>
-                )}
+
               </div>
             </button>
           </div>

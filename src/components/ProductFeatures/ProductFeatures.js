@@ -1,3 +1,4 @@
+import React, { useEffect, useState, useContext } from "react";
 import {
   faBoxOpen,
   faDownLeftAndUpRightToCenter,
@@ -9,7 +10,9 @@ import {
   faUpRightAndDownLeftFromCenter,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useEffect, useState } from "react";
+import SuccessToast from "../ProductSearch/SuccessToast/SuccessToast";
+import ErrorToast from "../ProductSearch/ErrorToast/ErrorToast";
+import { CartContext } from "../CartContext";
 
 export const ProductFeatures = ({ productFeatures }) => {
   const {
@@ -29,10 +32,19 @@ export const ProductFeatures = ({ productFeatures }) => {
   } = productFeatures;
 
   const [productItem, setProductItem] = useState([]);
+  const [showSuccessToast, setShowSuccessToast] = useState(false);
+  const [showErrorToast, setShowErrorToast] = useState(false);
+  const { updateCartCount } = useContext(CartContext);
+
   const localItems =
     typeof window !== "undefined"
       ? JSON.parse(localStorage.getItem("items")) || []
       : [];
+
+  useEffect(() => {
+    const filteredItems = filterItemsByProductId(productId);
+    setProductItem(filteredItems);
+  }, [productId]);
 
   const filterItemsByProductId = (productId) => {
     const filteredItems = localItems.filter(
@@ -40,13 +52,6 @@ export const ProductFeatures = ({ productFeatures }) => {
     );
     return filteredItems;
   };
-
-  useEffect(() => {
-    const filteredItems = filterItemsByProductId(productId);
-    setProductItem(filteredItems);
-  }, [productId]);
-
-  console.log(productItem);
 
   const handleAddToCart = (products) => {
     const cartItems = JSON.parse(localStorage.getItem("cart")) || [];
@@ -64,15 +69,32 @@ export const ProductFeatures = ({ productFeatures }) => {
       if (productIndex === -1) {
         // si el producto no está en el carrito, lo agregamos
         cartItems.push(product);
-
+        updateCartCount();
+        handleShowToast();
       } else {
         // si el producto ya está en el carrito
-        console.log('Error')
+        handleShowErrorToast();
       }
     });
 
     localStorage.setItem("cart", JSON.stringify(cartItems));
   };
+
+  function handleShowToast() {
+    setShowSuccessToast(true);
+  }
+
+  function handleCloseToast() {
+    setShowSuccessToast(false);
+  }
+
+  function handleShowErrorToast() {
+    setShowErrorToast(true);
+  }
+
+  function handleCloseErrorToast() {
+    setShowErrorToast(false);
+  }
 
   const separador = (array) => {
     // console.log(array.length);
@@ -182,7 +204,7 @@ export const ProductFeatures = ({ productFeatures }) => {
             </a>
           )}
 
-          {productItem.length !== 0  && (
+          {productItem.length !== 0 && (
             <button
               className="btn mt-3 w-full bg-slate-900 text-slate-100 hover:bg-slate-700 md:ml-3 md:mt-0"
               onClick={() => handleAddToCart(productItem)}
@@ -192,6 +214,19 @@ export const ProductFeatures = ({ productFeatures }) => {
           )}
         </div>
       </div>
+      {showSuccessToast && (
+        <SuccessToast
+          message="¡Genial! Este producto se ha añadido a tu lista de cotización..."
+          onClose={handleCloseToast}
+        />
+      )}
+
+      {showErrorToast && (
+        <ErrorToast
+          message="¡Ooops! Este producto ya se añadió a tu lista de cotización..."
+          onClose={handleCloseErrorToast}
+        />
+      )}
     </div>
   );
 };

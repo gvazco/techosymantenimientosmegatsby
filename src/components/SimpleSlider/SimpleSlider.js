@@ -58,7 +58,7 @@ export const SimpleSlider = ({ title, children }) => {
         </h3>
         <CallToActionButton
           fullWidth
-          label="Mostrar Detalles"
+          label="Ver Catálogo"
           destination={`/productos${item.innerBlocks[2].attributes.data.destination}`}
         />
       </div>

@@ -10,3 +10,4 @@ export * from "./PostSearch";
 export * from "./ContactForm7";
 export * from "./SimpleSlider";
 export * from "./BudgetList";
+export * from "./CartContext";
