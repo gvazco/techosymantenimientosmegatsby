@@ -9,7 +9,7 @@ import {
   faUpRightAndDownLeftFromCenter,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 export const ProductFeatures = ({ productFeatures }) => {
   const {
@@ -26,7 +26,52 @@ export const ProductFeatures = ({ productFeatures }) => {
     entrega,
     otros,
     whatsapp,
+    productId,
   } = productFeatures;
+
+  const [productItem, setProductItem] = useState([]);
+
+  const localCart = JSON.parse(localStorage.getItem("cart")) || [];
+  const localItems = JSON.parse(localStorage.getItem("items")) || [];
+
+  const filterItemsByProductId = (productId) => {
+    const filteredItems = localItems.filter(
+      (item) => item.databaseId === productId
+    );
+    return filteredItems;
+  };
+
+  useEffect(() => {
+    const filteredItems = filterItemsByProductId(productId);
+    setProductItem(filteredItems);
+  }, [productId]);
+
+
+  const handleAddToCart = (products) => {
+    const cartItems = JSON.parse(localStorage.getItem("cart")) || [];
+
+    if (!Array.isArray(products)) {
+      // Si products no es una lista, lo convertimos en una lista
+      products = [products];
+    }
+    products.forEach((product) => {
+      // console.log(product);
+      // console.log(cartItems);
+      const productIndex = cartItems.findIndex(
+        (item) => item.databaseId === product.databaseId
+      );
+      if (productIndex === -1) {
+        // si el producto no está en el carrito, lo agregamos
+        cartItems.push(product);
+
+      } else {
+        // si el producto ya está en el carrito
+        console.log('Error')
+      }
+    });
+
+    localStorage.setItem("cart", JSON.stringify(cartItems));
+  };
 
   const separador = (array) => {
     // console.log(array.length);
@@ -36,32 +81,6 @@ export const ProductFeatures = ({ productFeatures }) => {
     const primerosElementos = array.slice(0, -1).join(", ");
     return `${primerosElementos} y ${ultimoElemento}`;
   };
-
-  // const handleAddToCart = (products) => {
-  //   const cartItems = JSON.parse(localStorage.getItem("cart")) || [];
-
-  //   if (!Array.isArray(products)) {
-  //     // Si products no es una lista, lo convertimos en una lista
-  //     products = [products];
-  //   }
-  //   products.forEach((product) => {
-  //     // console.log(product);
-  //     // console.log(cartItems);
-  //     const productIndex = cartItems.findIndex(
-  //       (item) => item.databaseId === product.databaseId
-  //     );
-  //     if (productIndex === -1) {
-  //       // si el producto no está en el carrito, lo agregamos
-  //       cartItems.push(product);
-  //     } else {
-  //       // si el producto ya está en el carrito
-  //       // handleShowErrorToast();
-  //       console.log("Hola");
-  //     }
-  //   });
-
-  //   localStorage.setItem("cart", JSON.stringify(cartItems));
-  // };
 
   return (
     <div className="mx-auto my-10 flex w-full flex-col justify-center bg-transparent text-center text-slate-900 lg:max-w-5xl lg:flex-row lg:justify-around">
@@ -171,7 +190,7 @@ export const ProductFeatures = ({ productFeatures }) => {
 
           <button
             className="btn mt-3 w-full bg-slate-900 text-slate-100 hover:bg-slate-700 md:ml-3 md:mt-0"
-
+            onClick={() => handleAddToCart(productItem)}
           >
             Añadir a Cotización
           </button>

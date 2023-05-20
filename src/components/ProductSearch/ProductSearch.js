@@ -17,7 +17,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { CallToActionButton } from "../CallToActionButton";
 import { PageNumber } from "./PageNumber";
-import { navigate } from "gatsby";
+import { Link, navigate } from "gatsby";
 import SuccessToast from "./SuccessToast/SuccessToast";
 import ErrorToast from "./ErrorToast/ErrorToast";
 
@@ -149,7 +149,7 @@ export const ProductSearch = ({ style, className }) => {
   };
 
   const handleAddToStorage = (products) => {
-    const storageItems = JSON.parse(localStorage.getItem("storageItems")) || [];
+    const items = JSON.parse(localStorage.getItem("items")) || [];
 
     if (!Array.isArray(products)) {
       // Si products no es una lista, lo convertimos en una lista
@@ -157,17 +157,17 @@ export const ProductSearch = ({ style, className }) => {
     }
     products.forEach((product) => {
       // console.log(product);
-      // console.log(storageItems);
-      const productIndex = storageItems.findIndex(
+      // console.log(items);
+      const productIndex = items.findIndex(
         (item) => item.databaseId === product.databaseId
       );
       if (productIndex === -1) {
         // si el producto no está en el carrito, lo agregamos
-        storageItems.push(product);
+        items.push(product);
       }
     });
 
-    localStorage.setItem("storageItems", JSON.stringify(storageItems));
+    localStorage.setItem("items", JSON.stringify(items));
   };
 
   function handleShowToast() {
@@ -247,13 +247,15 @@ export const ProductSearch = ({ style, className }) => {
       </fieldset>
 
       {loading && (
-        <div
-          class="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
-          role="status"
-        >
-          <span class="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">
-            Loading...
-          </span>
+        <div className="flex h-40 items-center justify-center">
+          <div
+            className=" inline-block h-10 w-10 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
+            role="status"
+          >
+            <span className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">
+              Loading...
+            </span>
+          </div>
         </div>
       )}
 
@@ -459,13 +461,11 @@ export const ProductSearch = ({ style, className }) => {
               </>
 
               <div className="my-2 flex flex-col gap-2 md:flex-row">
-                <CallToActionButton
-                  fullWidth
-                  label="Ver detalles"
-                  destination={product.uri}
-                  onClick={() => handleAddToStorage(product)}
-                />
-
+                <Link className="btn w-full " to={product.uri}>
+                  <button onClick={() => handleAddToStorage(product)}>
+                    <span className="">VER DETALLES</span>
+                  </button>
+                </Link>
                 <button
                   className="btn w-full bg-slate-900 text-slate-100 hover:bg-slate-700"
                   onClick={() => handleAddToCart(product)}
@@ -475,7 +475,7 @@ export const ProductSearch = ({ style, className }) => {
                       className="mr-2 text-slate-100"
                       icon={faCartFlatbed}
                     />
-                    Cotizar
+                    COTIZAR
                   </span>
                 </button>
               </div>

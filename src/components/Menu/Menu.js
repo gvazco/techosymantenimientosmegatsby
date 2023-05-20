@@ -1,7 +1,7 @@
 import { graphql, Link, useStaticQuery } from "gatsby";
 import { StaticImage } from "gatsby-plugin-image";
 import { CallToActionButton } from "../CallToActionButton";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import {
   faBars,
   faCartFlatbed,
@@ -72,17 +72,20 @@ export const Menu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
+   const updateCartCount = useCallback(() => {
+     const storedCartItems = JSON.parse(localStorage.getItem("cart"));
+     setCartItems(storedCartItems);
 
-  useEffect(() => {
-    const storedCartItems = JSON.parse(localStorage.getItem("cart"));
-    setCartItems(storedCartItems);
+     if (storedCartItems) {
+       setCartCount(storedCartItems.length);
+     } else {
+       setCartCount(0);
+     }
+   }, []);
 
-    if (storedCartItems) {
-      setCartCount(storedCartItems.length);
-    } else {
-      setCartCount(0);
-    }
-  }, [cartItems]);
+   useEffect(() => {
+     updateCartCount();
+   }, [updateCartCount]);
 
   return (
     <nav>

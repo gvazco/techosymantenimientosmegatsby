@@ -35,9 +35,9 @@ export const BudgetList = () => {
   };
 
   return (
-    <div>
-      <h2 className="mt-6 text-xl">Añadir a la cotización:</h2>
-      <div className="mx-auto flex min-h-full w-full">
+    <div className="alignwide are-vertically-aligned-center mb-2">
+      <div className="mx-auto max-w-4xl">
+        <h2 className="mt-6 text-xl">Añadir a la cotización:</h2>
         <ul className="mt-6 border border-slate-300 p-3 text-right">
           {/* Exist products in Cart */}
           {cartItems.length === 0 && (
