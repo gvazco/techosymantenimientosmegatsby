@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
+import { StaticImage } from "gatsby-plugin-image";
+import { Link } from "gatsby";
 
-export default function ErrorToast({ message, onClose, timeout = 5000 }) {
+export default function ErrorToast({ message, onClose, timeout = 10000 }) {
   const [show, setShow] = useState(true);
 
   useEffect(() => {
@@ -23,17 +25,32 @@ export default function ErrorToast({ message, onClose, timeout = 5000 }) {
   return (
     <div
       className={`${
-        show ? "scale-100 opacity-100" : "scale-100 opacity-0"
-      } fixed top-1 right-1 z-50 transform bg-teal-500 text-white transition-all duration-300 md:top-6 md:right-6`}
+        show ? "scale-100 opacity-100" : "scale-90 opacity-0"
+      } alignfull fixed top-2/4 left-2/4 z-50 flex h-screen -translate-x-2/4 -translate-y-2/4 transform items-center justify-center p-6 text-white transition-all duration-300 md:h-3/4 md:w-3/4`}
     >
-      <div className="flex w-full max-w-sm items-center justify-between rounded-lg bg-white px-4 py-2 shadow-md">
-        <p className="text-sm font-medium text-gray-600">{message}</p>
-        <button
-          className="text-gray-600 hover:text-gray-800 focus:text-gray-800 focus:outline-none"
-          onClick={handleClose}
-        >
-          Close
-        </button>
+      <div className="flex h-screen w-screen flex-col items-center justify-center bg-white p-6 shadow-md md:h-3/4 md:w-3/4">
+        <StaticImage
+          src="../../../../static/error.svg"
+          height={100}
+          width={100}
+          alt="error"
+        />
+        <p className="text-base font-medium text-gray-600">{message}</p>
+        <div className="flex w-full flex-row items-center justify-around align-middle ">
+          <button
+            className="btn mr-3 w-full bg-slate-700 text-gray-600 hover:bg-slate-600 hover:text-gray-800 focus:text-gray-800 focus:outline-none"
+            onClick={handleClose}
+          >
+            Volver
+          </button>
+          <Link
+            to="/budget"
+            className="btn  ml-3 w-full text-gray-600 hover:text-gray-800 focus:text-gray-800 focus:outline-none"
+            onClick={handleClose}
+          >
+            Mi Lista
+          </Link>
+        </div>
       </div>
     </div>
   );

@@ -119,13 +119,13 @@ export const ProyectSearch = ({ style, className }) => {
                   alt=""
                 />
               )}
-              <div className="my-2 justify-between gap-2 font-heading text-xl font-bold lg:flex">
+              <div className="my-2 justify-between text-center gap-2 font-heading text-xl font-bold lg:flex">
                 <div className="my-2">{proyect.title}</div>
               </div>
               <div>
                 <CallToActionButton
                   fullWidth
-                  label="View more details"
+                  label="Ver Proyecto"
                   destination={proyect.uri}
                 />
               </div>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { useQuery, gql } from "@apollo/client";
 import numeral from "numeral";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -15,11 +15,12 @@ import {
   faTruckFast,
   faUpRightAndDownLeftFromCenter,
 } from "@fortawesome/free-solid-svg-icons";
-import { CallToActionButton } from "../CallToActionButton";
+// import { CallToActionButton } from "../CallToActionButton";
 import { PageNumber } from "./PageNumber";
-import { navigate } from "gatsby";
+import { Link, navigate } from "gatsby";
 import SuccessToast from "./SuccessToast/SuccessToast";
 import ErrorToast from "./ErrorToast/ErrorToast";
+import { CartContext } from "../CartContext";
 
 export const ProductSearch = ({ style, className }) => {
   const [showDescription, setShowDescription] = useState(false); // agregar estado
@@ -30,6 +31,7 @@ export const ProductSearch = ({ style, className }) => {
   // let defaultMaxPrice = "";
   // let defaultMinPrice = "";
   // let defaultColor = "";
+  const { updateCartCount } = useContext(CartContext);
 
   if (typeof window !== "undefined") {
     const params = new URLSearchParams(window.location.search);
@@ -122,6 +124,14 @@ export const ProductSearch = ({ style, className }) => {
     navigate(`${window.location.pathname}?${params.toString()}`);
   };
 
+  useEffect(() => {
+    if (!loading) {
+      const products = data?.products?.nodes;
+      // Guardar los productos en el localStorage
+      localStorage.setItem("items", JSON.stringify(products));
+    }
+  }, [loading]);
+
   const handleAddToCart = (products) => {
     const cartItems = JSON.parse(localStorage.getItem("cart")) || [];
 
@@ -129,10 +139,9 @@ export const ProductSearch = ({ style, className }) => {
       // Si products no es una lista, lo convertimos en una lista
       products = [products];
     }
-
     products.forEach((product) => {
-      console.log(product);
-      console.log(cartItems);
+      // console.log(product);
+      // console.log(cartItems);
       const productIndex = cartItems.findIndex(
         (item) => item.databaseId === product.databaseId
       );
@@ -147,6 +156,29 @@ export const ProductSearch = ({ style, className }) => {
     });
 
     localStorage.setItem("cart", JSON.stringify(cartItems));
+    updateCartCount();
+  };
+
+  const handleAddToStorage = (products) => {
+    const items = JSON.parse(localStorage.getItem("items")) || [];
+
+    if (!Array.isArray(products)) {
+      // Si products no es una lista, lo convertimos en una lista
+      products = [products];
+    }
+    products.forEach((product) => {
+      // console.log(product);
+      // console.log(items);
+      const productIndex = items.findIndex(
+        (item) => item.databaseId === product.databaseId
+      );
+      if (productIndex === -1) {
+        // si el producto no está en el carrito, lo agregamos
+        items.push(product);
+      }
+    });
+
+    localStorage.setItem("items", JSON.stringify(items));
   };
 
   function handleShowToast() {
@@ -224,6 +256,20 @@ export const ProductSearch = ({ style, className }) => {
           </div>
         </form>
       </fieldset>
+
+      {loading && (
+        <div className="flex h-40 items-center justify-center">
+          <div
+            className=" inline-block h-10 w-10 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
+            role="status"
+          >
+            <span className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">
+              Loading...
+            </span>
+          </div>
+        </div>
+      )}
+
       {!loading && !!data?.products?.nodes?.length && (
         <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
           {data.products.nodes.map((product) => (
@@ -426,12 +472,11 @@ export const ProductSearch = ({ style, className }) => {
               </>
 
               <div className="my-2 flex flex-col gap-2 md:flex-row">
-                <CallToActionButton
-                  fullWidth
-                  label="Ver detalles"
-                  destination={product.uri}
-                />
-
+                <Link className="btn w-full " to={product.uri}>
+                  <button onClick={() => handleAddToStorage(product)}>
+                    <span className="">VER DETALLES</span>
+                  </button>
+                </Link>
                 <button
                   className="btn w-full bg-slate-900 text-slate-100 hover:bg-slate-700"
                   onClick={() => handleAddToCart(product)}
@@ -441,7 +486,7 @@ export const ProductSearch = ({ style, className }) => {
                       className="mr-2 text-slate-100"
                       icon={faCartFlatbed}
                     />
-                    Cotizar
+                    COTIZAR
                   </span>
                 </button>
               </div>
@@ -449,6 +494,7 @@ export const ProductSearch = ({ style, className }) => {
           ))}
         </div>
       )}
+
       {!!totalResults && (
         <div className="my-4 flex items-center justify-center gap-2">
           <button onClick={handlePrevPage} disabled={currentPage === 1}>
