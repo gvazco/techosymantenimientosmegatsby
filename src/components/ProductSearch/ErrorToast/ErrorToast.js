@@ -26,9 +26,9 @@ export default function ErrorToast({ message, onClose, timeout = 10000 }) {
     <div
       className={`${
         show ? "scale-100 opacity-100" : "scale-90 opacity-0"
-      } fixed top-2/4 left-2/4 z-50 flex h-screen w-screen md:h-3/4 md:w-3/4 -translate-x-2/4 -translate-y-2/4 transform items-center justify-center p-6 text-white transition-all duration-300`}
+      } alignfull fixed top-2/4 left-2/4 z-50 flex h-screen -translate-x-2/4 -translate-y-2/4 transform items-center justify-center p-6 text-white transition-all duration-300 md:h-3/4 md:w-3/4`}
     >
-      <div className="flex h-screen w-screen md:h-3/4 md:w-3/4 flex-col items-center justify-center bg-white p-6 shadow-md">
+      <div className="flex h-screen w-screen flex-col items-center justify-center bg-white p-6 shadow-md md:h-3/4 md:w-3/4">
         <StaticImage
           src="../../../../static/error.svg"
           height={100}
@@ -37,13 +37,12 @@ export default function ErrorToast({ message, onClose, timeout = 10000 }) {
         />
         <p className="text-base font-medium text-gray-600">{message}</p>
         <div className="flex w-full flex-row items-center justify-around align-middle ">
-          <Link
-            to="/store/all-products"
+          <button
             className="btn mr-3 w-full bg-slate-700 text-gray-600 hover:bg-slate-600 hover:text-gray-800 focus:text-gray-800 focus:outline-none"
             onClick={handleClose}
           >
             Volver
-          </Link>
+          </button>
           <Link
             to="/budget"
             className="btn  ml-3 w-full text-gray-600 hover:text-gray-800 focus:text-gray-800 focus:outline-none"

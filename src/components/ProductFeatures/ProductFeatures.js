@@ -69,7 +69,6 @@ export const ProductFeatures = ({ productFeatures }) => {
       if (productIndex === -1) {
         // si el producto no está en el carrito, lo agregamos
         cartItems.push(product);
-        updateCartCount();
         handleShowToast();
       } else {
         // si el producto ya está en el carrito
@@ -78,6 +77,7 @@ export const ProductFeatures = ({ productFeatures }) => {
     });
 
     localStorage.setItem("cart", JSON.stringify(cartItems));
+    updateCartCount();
   };
 
   function handleShowToast() {

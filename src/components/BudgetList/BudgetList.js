@@ -1,9 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Link } from "gatsby";
+import { CartContext } from "../CartContext";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faRotateBack, faTrash } from "@fortawesome/free-solid-svg-icons";
 
 export const BudgetList = () => {
   const [isBrowser, setIsBrowser] = useState(false);
   const [cartItems, setCartItems] = useState([]);
+  const { updateCartCount } = useContext(CartContext);
+
 
   useEffect(() => {
     setIsBrowser(true);
@@ -24,6 +29,7 @@ export const BudgetList = () => {
     setCartItems(updatedCartItems);
     if (isBrowser) {
       localStorage.setItem("cart", JSON.stringify(updatedCartItems));
+      updateCartCount();
     }
   };
 
@@ -31,6 +37,7 @@ export const BudgetList = () => {
     setCartItems([]);
     if (isBrowser) {
       localStorage.removeItem("cart");
+      updateCartCount();
     }
   };
 
@@ -61,13 +68,13 @@ export const BudgetList = () => {
                   style={{ objectFit: "cover", maxHeight: "50px" }}
                 />
               )}
-              <div className="flex flex-col md:flex-row md:items-center ">
+              <div className="flex flex-row items-center ">
                 <p className="cart_p mr-3 text-sm md:text-base">{item.title}</p>
                 <button
                   className="btn-delete"
                   onClick={() => handleRemoveItem(index)}
                 >
-                  Eliminar
+                  <FontAwesomeIcon icon={faTrash} />
                 </button>
               </div>
             </li>
@@ -75,7 +82,7 @@ export const BudgetList = () => {
           <hr className="mt-3"></hr>
           <div className="flex flex-row items-end justify-between">
             <Link to="/store/all-products" className="btn-secondary mr-3">
-              Volver
+              <FontAwesomeIcon icon={faRotateBack} />
             </Link>
 
             {cartItems.lenght !== 0 && (

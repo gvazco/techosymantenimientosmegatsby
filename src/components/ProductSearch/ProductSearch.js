@@ -126,14 +126,11 @@ export const ProductSearch = ({ style, className }) => {
 
   useEffect(() => {
     if (!loading) {
-      // Si no hay productos en el localStorage, agregarlos desde el prop
       const products = data?.products?.nodes;
-
       // Guardar los productos en el localStorage
       localStorage.setItem("items", JSON.stringify(products));
     }
   }, [loading]);
-
 
   const handleAddToCart = (products) => {
     const cartItems = JSON.parse(localStorage.getItem("cart")) || [];
@@ -151,7 +148,6 @@ export const ProductSearch = ({ style, className }) => {
       if (productIndex === -1) {
         // si el producto no está en el carrito, lo agregamos
         cartItems.push(product);
-        updateCartCount();
         handleShowToast();
       } else {
         // si el producto ya está en el carrito
@@ -160,6 +156,7 @@ export const ProductSearch = ({ style, className }) => {
     });
 
     localStorage.setItem("cart", JSON.stringify(cartItems));
+    updateCartCount();
   };
 
   const handleAddToStorage = (products) => {
