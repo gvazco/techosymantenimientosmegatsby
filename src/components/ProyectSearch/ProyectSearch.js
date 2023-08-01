@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useQuery, gql } from "@apollo/client";
 // import numeral from "numeral";
 import { CallToActionButton } from "../CallToActionButton";
@@ -76,15 +76,18 @@ export const ProyectSearch = ({ style, className }) => {
     navigate(`${window.location.pathname}?${params.toString()}`);
   };
 
+
   return (
     <div style={style} className={className}>
       <fieldset>
         <form
           onSubmit={handleSubmit}
-          className="mb-4 mt-3 flex flex-col sm:flex-row justify-center rounded-lg border border-slate-200 bg-slate-800 p-4"
+          className="mb-4 mt-3 flex flex-col justify-center rounded-lg border border-slate-200 bg-slate-800 p-4 sm:flex-row"
         >
           <div>
-            <strong className="text-slate-200">Filtrar por tipo de proyecto:</strong>
+            <strong className="text-slate-200">
+              Filtrar por tipo de proyecto:
+            </strong>
             <select
               name="type"
               defaultValue={defaultType}
@@ -98,13 +101,25 @@ export const ProyectSearch = ({ style, className }) => {
               <option value="mantenimiento">Mantenimiento</option>
             </select>
           </div>
-          <div className="ml-0 mt-2 sm:scroll-mt-0.5 sm:ml-5 flex">
+          <div className="ml-0 mt-2 flex sm:ml-5 sm:scroll-mt-0.5">
             <button type="submit" className="btn mt-auto mb-[2px]">
               Buscar
             </button>
           </div>
         </form>
       </fieldset>
+      {loading && (
+        <div className="flex h-40 items-center justify-center">
+          <div
+            className=" inline-block h-10 w-10 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
+            role="status"
+          >
+            <span className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">
+              Loading...
+            </span>
+          </div>
+        </div>
+      )}
       {!loading && !!data?.proyects?.nodes?.length && (
         <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
           {data.proyects.nodes.map((proyect) => (
@@ -119,7 +134,7 @@ export const ProyectSearch = ({ style, className }) => {
                   alt=""
                 />
               )}
-              <div className="my-2 justify-between text-center gap-2 font-heading text-xl font-bold lg:flex">
+              <div className="my-2 justify-between gap-2 text-center font-heading text-xl font-bold lg:flex">
                 <div className="my-2">{proyect.title}</div>
               </div>
               <div>

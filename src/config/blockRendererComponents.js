@@ -15,8 +15,10 @@ import {
   ProductSearch,
   PostSearch,
   BudgetList,
-  SimpleSlider
+  SimpleSlider,
+  ImagesGallery,
 } from "../components";
+
 import { GatsbyImage } from "gatsby-plugin-image";
 import numeral from "numeral";
 import { ProductFeatures } from "../components/ProductFeatures/ProductFeatures";
@@ -178,7 +180,7 @@ export const blockRendererComponents = (block) => {
       );
     }
     case "core/group": {
-      // console.log("GROUP: ", block);
+      console.log("GROUP: ", block);
       const customClass = block.attributes.className;
 
       if (customClass === "productsSlider") {
@@ -191,6 +193,20 @@ export const blockRendererComponents = (block) => {
           </SimpleSlider>
         );
       }
+      return;
+    }
+    case "core/gallery": {
+      console.log("GALLERY: ", block);
+      const customClass = block.attributes.className;
+
+      if (customClass === "imageGallery") {
+        return (
+          <ImagesGallery key={block.id}>
+            <BlockRenderer blocks={block.innerBlocks} />
+          </ImagesGallery>
+        );
+      }
+
       return;
     }
 

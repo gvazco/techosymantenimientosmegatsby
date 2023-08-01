@@ -87,9 +87,7 @@ export const PostSearch = ({ style, className }) => {
           className="mb-4 mt-3 flex flex-col justify-center rounded-lg border border-slate-200 bg-slate-800 p-4 sm:flex-row"
         >
           <div>
-            <strong className="text-slate-200">
-              Filtrar por categoría:
-            </strong>
+            <strong className="text-slate-200">Filtrar por categoría:</strong>
             <select
               name="type"
               defaultValue={defaultType}
@@ -97,7 +95,9 @@ export const PostSearch = ({ style, className }) => {
             >
               <option value="">Todos los Posts</option>
               <option value="comunicados">Comunicados</option>
-              <option value="documentacion_tecnica">Documentación Técnica</option>
+              <option value="documentacion_tecnica">
+                Documentación Técnica
+              </option>
               <option value="medio_ambiente">Medio Ambiente</option>
               <option value="noticias_acero">Noticias del Acero</option>
               <option value="seguridad">Seguridad</option>
@@ -112,6 +112,18 @@ export const PostSearch = ({ style, className }) => {
           </div>
         </form>
       </fieldset>
+      {loading && (
+        <div className="flex h-40 items-center justify-center">
+          <div
+            className=" inline-block h-10 w-10 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
+            role="status"
+          >
+            <span className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">
+              Loading...
+            </span>
+          </div>
+        </div>
+      )}
       {!loading && !!data?.posts?.nodes?.length && (
         <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
           {data.posts.nodes.map((post) => (

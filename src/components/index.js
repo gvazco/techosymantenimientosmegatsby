@@ -9,5 +9,6 @@ export * from "./ProductSearch";
 export * from "./PostSearch";
 export * from "./ContactForm7";
 export * from "./SimpleSlider";
+export * from "./ImagesGallery";
 export * from "./BudgetList";
 export * from "./CartContext";
