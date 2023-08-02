@@ -9,7 +9,6 @@ export const BudgetList = () => {
   const [cartItems, setCartItems] = useState([]);
   const { updateCartCount } = useContext(CartContext);
 
-
   useEffect(() => {
     setIsBrowser(true);
   }, []);
@@ -91,9 +90,12 @@ export const BudgetList = () => {
                   <button onClick={handleClearCart} className="btn-delete mr-3">
                     Limpiar
                   </button>
-                  <button className="btn-delete bg-teal-600 hover:bg-teal-500">
+                  <Link
+                    to="/funnel"
+                    className="btn-delete bg-teal-600 hover:bg-teal-500 focus:outline-none"
+                  >
                     Continuar
-                  </button>
+                  </Link>
                 </div>
               </>
             )}
