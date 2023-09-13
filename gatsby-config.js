@@ -7,12 +7,8 @@ require("dotenv").config({
  */
 module.exports = {
   siteMetadata: {
-    title: `Techos y Mantenimientos`,
-    description: `Comercializadora de lámina y aceros, somos especialistas en techos y mantenimientos industriales y residenciales`,
-    author: `@gvazco`,
-    image: "./src/images/GOPR5753-1024x640.jpg",
-    url: `https://www.techosymantenimientos.com.mx`,
-    siteUrl: `https://www.techosymantenimientos.com.mx`,
+    title: `Techos y Mantenimientos - Mevasa`,
+    siteUrl: `https://techosymantenimientos.com`,
   },
   plugins: [
     {
