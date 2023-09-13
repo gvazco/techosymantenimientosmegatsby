@@ -8,7 +8,11 @@ require("dotenv").config({
 module.exports = {
   siteMetadata: {
     title: `Techos y Mantenimientos - Mevasa`,
-    siteUrl: `https://techosymantenimientos.com`,
+    description: `Comercializadora de lámina y aceros, somos especialistas en techos y mantenimientos industriales y residenciales`,
+    author: `@gvazco`,
+    image: "./src/images/GOPR5753-1024x640.jpg",
+    url: `https://www.techosymantenimientos.com`,
+    siteUrl: `https://www.techosymantenimientos.com`,
   },
   plugins: [
     {
@@ -17,9 +21,9 @@ module.exports = {
         uri: process.env.WPGRAPHQL_URL,
       },
     },
-    "gatsby-plugin-sitemap",
-    "gatsby-plugin-react-helmet",
-    "gatsby-plugin-postcss",
+    `gatsby-plugin-react-helmet`,
+    `gatsby-plugin-sitemap`,
+    `gatsby-plugin-postcss`,
     `gatsby-transformer-sharp`, // Needed for dynamic images,
     `gatsby-plugin-sharp`,
     `gatsby-plugin-image`,
@@ -30,9 +34,11 @@ module.exports = {
       },
     },
     {
-      resolve: "gatsby-plugin-manifest",
+      resolve: `gatsby-plugin-manifest`,
       options: {
-        icon: "static/favicon-bco.webp",
+        start_url: `/`,
+        display: `minimal-ui`,
+        icon: `src/images/gatsby-icon.png`, // This path is relative to the root of the site.
       },
     },
   ],
