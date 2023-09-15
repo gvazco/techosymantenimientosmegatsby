@@ -106,7 +106,7 @@ export const PostSearch = ({ style, className }) => {
             </select>
           </div>
           <div className="ml-0 mt-2 flex sm:ml-5 sm:scroll-mt-0.5">
-            <button type="submit" className="btn mt-auto mb-[2px]">
+            <button type="submit" className="btn mt-auto mb-[2px] w-full ">
               Buscar
             </button>
           </div>

@@ -15,6 +15,7 @@ import {
   ProductSearch,
   PostSearch,
   BudgetList,
+  BudgetForm,
   SimpleSlider,
   ImagesGallery,
 } from "../components";
@@ -165,6 +166,10 @@ export const blockRendererComponents = (block) => {
       console.log("BUDGET: ", block);
       return <BudgetList key={block.id} />;
     }
+    case "tym/budgetform": {
+      console.log("BUDGET FORM: ", block);
+      return <BudgetForm key={block.id} />;
+    }
     case "core/media-text": {
       return (
         <MediaText
@@ -211,6 +216,7 @@ export const blockRendererComponents = (block) => {
     }
 
     default:
+      console.log(block);
       return null;
   }
 };

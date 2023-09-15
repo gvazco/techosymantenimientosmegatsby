@@ -1,10 +1,9 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Link } from "gatsby";
 import { CartContext } from "../CartContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faRotateBack, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
-export const BudgetList = () => {
+export const BudgetForm = () => {
   const [isBrowser, setIsBrowser] = useState(false);
   const [cartItems, setCartItems] = useState([]);
   const { updateCartCount } = useContext(CartContext);
@@ -22,6 +21,22 @@ export const BudgetList = () => {
     }
   }, [isBrowser]);
 
+  useEffect(() => {
+    const textarea = document
+      .querySelector("#wpcf7-f1545-o1")
+      .querySelector(".funnel__form")
+      .getElementsByTagName("textarea")[0];
+    console.log(cartItems);
+
+    const items = cartItems.map((item, index) => item.title);
+    const itemsFormatted = items.join(",\n");
+
+    textarea.value = items
+      ? `Por favor, ayudenme a cotizar los siguientes materiales: 
+    ${itemsFormatted}`
+      : `¡Ooops! No hay productos en su carrito, por favor regrese a nuestro catálogo. O bien, indiquenos cuál es el producto o servicio de su interés.  `;
+  });
+
   const handleRemoveItem = (index) => {
     const updatedCartItems = [...cartItems];
     updatedCartItems.splice(index, 1);
@@ -32,18 +47,9 @@ export const BudgetList = () => {
     }
   };
 
-  const handleClearCart = () => {
-    setCartItems([]);
-    if (isBrowser) {
-      localStorage.removeItem("cart");
-      updateCartCount();
-    }
-  };
-
   return (
     <div className="alignwide are-vertically-aligned-center mb-2">
       <div className="mx-auto max-w-4xl">
-        <h2 className="mt-6 text-xl">Añadir a la cotización:</h2>
         <ul className="mt-6 border border-slate-300 p-3 text-right">
           {/* Exist products in Cart */}
           {cartItems.length === 0 && (
@@ -79,27 +85,6 @@ export const BudgetList = () => {
             </li>
           ))}
           <hr className="mt-3"></hr>
-          <div className="flex flex-row items-end justify-between">
-            <Link to="/store/all-products" className="btn-secondary mr-3">
-              <FontAwesomeIcon icon={faRotateBack} />
-            </Link>
-
-            {cartItems.lenght !== 0 && (
-              <>
-                <div className="mt-3 flex flex-row justify-between">
-                  <button onClick={handleClearCart} className="btn-delete mr-3">
-                    Limpiar
-                  </button>
-                  <Link
-                    to="/funnel"
-                    className="btn-delete bg-teal-600 hover:bg-teal-500 focus:outline-none"
-                  >
-                    Continuar
-                  </Link>
-                </div>
-              </>
-            )}
-          </div>
         </ul>
       </div>
     </div>

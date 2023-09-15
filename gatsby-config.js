@@ -8,7 +8,7 @@ require("dotenv").config({
 module.exports = {
   siteMetadata: {
     title: `Techos y Mantenimientos`,
-    siteUrl: `https://www.yourdomain.tld`,
+    siteUrl: `https://www.techosymantenimientos.com`,
   },
   plugins: [
     {
@@ -17,6 +17,7 @@ module.exports = {
         uri: process.env.WPGRAPHQL_URL,
       },
     },
+    "gatsby-plugin-sitemap",
     "gatsby-plugin-react-helmet",
     "gatsby-plugin-postcss",
     `gatsby-transformer-sharp`, // Needed for dynamic images,
