@@ -31,8 +31,10 @@ export const BudgetForm = () => {
     const items = cartItems.map((item, index) => item.title);
     const itemsFormatted = items.join(",\n");
 
-    textarea.value = `Por favor, ayudenme a cotizar los siguientes materiales: 
-${itemsFormatted}`;
+    textarea.value = items
+      ? `Por favor, ayudenme a cotizar los siguientes materiales: 
+    ${itemsFormatted}`
+      : `¡Ooops! No hay productos en su carrito, por favor regrese a nuestro catálogo. O bien, indiquenos cuál es el producto o servicio de su interés.  `;
   });
 
   const handleRemoveItem = (index) => {
