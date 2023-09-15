@@ -33,7 +33,7 @@ export const BudgetForm = () => {
 
     textarea.value = items
       ? `Por favor, ayudenme a cotizar los siguientes materiales: 
-    ${itemsFormatted}`
+  ${itemsFormatted}`
       : `¡Ooops! No hay productos en su carrito, por favor regrese a nuestro catálogo. O bien, indiquenos cuál es el producto o servicio de su interés.  `;
   });
 
@@ -49,7 +49,8 @@ export const BudgetForm = () => {
 
   return (
     <div className="alignwide are-vertically-aligned-center mb-2">
-      <div className="mx-auto max-w-4xl">
+      <div className="mx-auto max-w-2xl">
+        <h2 className="mt-6 text-xl">Solicitar cotización:</h2>
         <ul className="mt-6 border border-slate-300 p-3 text-right">
           {/* Exist products in Cart */}
           {cartItems.length === 0 && (
