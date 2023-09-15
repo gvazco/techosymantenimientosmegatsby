@@ -11,4 +11,6 @@ export * from "./ContactForm7";
 export * from "./SimpleSlider";
 export * from "./ImagesGallery";
 export * from "./BudgetList";
+export * from "./BudgetForm";
+export * from "./ImagesGallery";
 export * from "./CartContext";
