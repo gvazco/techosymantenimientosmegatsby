@@ -51,7 +51,7 @@ export const blockRendererComponents = (block) => {
     case "tgg/carprice": {
       return (
         <div className="flex justify-center">
-          <div className="bg-black py-5 px-8 font-heading text-3xl text-white">
+          <div className="bg-black px-8 py-5 font-heading text-3xl text-white">
             £{numeral(block.attributes.price).format("0,0")}
           </div>
         </div>
@@ -214,9 +214,28 @@ export const blockRendererComponents = (block) => {
 
       return;
     }
+    case "core/embed": {
+      console.log("EMBED", block.attributes.url);
+
+      return (
+        <iframe
+          key={block.id}
+          width="100%"
+          height="600"
+          className={getClasses(block)}
+          style={getStyles(block)}
+          src={block.attributes.url}
+          title="YouTube video player"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowfullscreen
+        ></iframe>
+      );
+    }
 
     default:
       console.log(block);
+
       return null;
   }
 };

@@ -8,13 +8,11 @@ export const ImagesGallery = ({ children }) => {
   const imageItem = content.map((item, index) => (
     <div class="relative transform rounded-lg border-4 border-slate-800 shadow-md transition duration-500 hover:scale-105">
       <div class="flex justify-center">
-        <a href="#">
-          <GatsbyImage
-            key={index}
-            alt={item.id}
-            image={item.attributes.gatsbyImage}
-          />
-        </a>
+        <GatsbyImage
+          key={index}
+          alt={item.id}
+          image={item.attributes.gatsbyImage}
+        />
       </div>
     </div>
   ));

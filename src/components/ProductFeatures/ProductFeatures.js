@@ -98,11 +98,13 @@ export const ProductFeatures = ({ productFeatures }) => {
 
   const separador = (array) => {
     // console.log(array.length);
-    if (array.length === 0) return "";
-    if (array.length === 1) return array[0];
-    const ultimoElemento = array[array.length - 1];
-    const primerosElementos = array.slice(0, -1).join(", ");
-    return `${primerosElementos} y ${ultimoElemento}`;
+    if (array?.length === 0) return "";
+    if (array?.length >= 1) return array[0];
+    if (array?.lenght >= 1) {
+      const ultimoElemento = array[array?.length - 1];
+      const primerosElementos = array.slice(0, -1).join(", ");
+      return `${primerosElementos} y ${ultimoElemento}`;
+    }
   };
 
   return (
@@ -117,7 +119,7 @@ export const ProductFeatures = ({ productFeatures }) => {
             <span className="p-1 text-left">Marca: {marca}</span>
           </div>
         )}
-        {largo_efectivo.length !== 0 && (
+        {!!largo_efectivo && (
           <div className="flex">
             <FontAwesomeIcon
               className="p-2 align-middle"
@@ -129,7 +131,7 @@ export const ProductFeatures = ({ productFeatures }) => {
             </span>
           </div>
         )}
-        {largo_estandar.length !== 0 && (
+        {!!largo_estandar && (
           <div className="flex">
             <FontAwesomeIcon
               className="p-2 align-middle"
@@ -140,7 +142,7 @@ export const ProductFeatures = ({ productFeatures }) => {
             </span>
           </div>
         )}
-        {ancho_efectivo.length !== 0 && (
+        {!!ancho_efectivo && (
           <div className="flex">
             <FontAwesomeIcon className="p-2 align-middle" icon={faLeftRight} />
             <span className="p-1 text-left">
@@ -148,7 +150,7 @@ export const ProductFeatures = ({ productFeatures }) => {
             </span>
           </div>
         )}
-        {espesor.length !== 0 && (
+        {!!espesor && (
           <div className="flex">
             <FontAwesomeIcon
               className="p-2 align-middle"
@@ -159,7 +161,7 @@ export const ProductFeatures = ({ productFeatures }) => {
             </span>
           </div>
         )}
-        {calibre.lenght !== 0 && (
+        {!!calibre && (
           <div className="flex">
             <FontAwesomeIcon
               className="p-2 align-middle"
@@ -204,7 +206,7 @@ export const ProductFeatures = ({ productFeatures }) => {
             </a>
           )}
 
-          {productItem.length !== 0 && (
+          {!!productItem && (
             <button
               className="btn mt-3 w-full bg-slate-900 text-slate-100 hover:bg-slate-700 md:ml-3 md:mt-0"
               onClick={() => handleAddToCart(productItem)}

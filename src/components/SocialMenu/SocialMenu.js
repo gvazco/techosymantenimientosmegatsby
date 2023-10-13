@@ -48,35 +48,38 @@ export const SocialMenu = () => {
                 }`}
               >
                 <div>
-                  <a href={item.socialItem.destination.url} className="block py-4 px-2">
+                  <a
+                    href={item.socialItem.destination.url}
+                    className="block px-2 py-4"
+                  >
                     {item.socialItem.label === "Facebook" && (
                       <FontAwesomeIcon
                         icon={faFacebookF}
-                        className="p-2 align-middle"
+                        className="fa-sm p-1 align-middle"
                       />
                     )}
                     {item.socialItem.label === "Messenger" && (
                       <FontAwesomeIcon
                         icon={faFacebookMessenger}
-                        className="p-2 align-middle"
+                        className="fa-sm p-1 align-middle"
                       />
                     )}
                     {item.socialItem.label === "Instagram" && (
                       <FontAwesomeIcon
                         icon={faInstagram}
-                        className="p-2 align-middle"
+                        className="fa-sm p-1 align-middle"
                       />
                     )}
                     {item.socialItem.label === "Youtube" && (
                       <FontAwesomeIcon
                         icon={faYoutube}
-                        className="p-2 align-middle"
+                        className="fa-sm p-1 align-middle"
                       />
                     )}
                     {item.socialItem.label === "WhatsApp" && (
                       <FontAwesomeIcon
                         icon={faWhatsapp}
-                        className="p-2 align-middle"
+                        className="fa-sm ml-1 p-1 align-middle"
                       />
                     )}
                   </a>

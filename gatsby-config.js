@@ -9,6 +9,9 @@ module.exports = {
   siteMetadata: {
     title: `Techos y Mantenimientos`,
     siteUrl: `https://www.techosymantenimientos.com`,
+    description: `Comercializadora de lámina y aceros, somos especialistas en techos y mantenimientos industriales y residenciales`,
+    author: `@gvazco`,
+    image: "./src/images/icon.png",
   },
   plugins: [
     {
@@ -17,18 +20,28 @@ module.exports = {
         uri: process.env.WPGRAPHQL_URL,
       },
     },
+    `gatsby-plugin-robots-txt`,
     "gatsby-plugin-sitemap",
     "gatsby-plugin-react-helmet",
     "gatsby-plugin-postcss",
     `gatsby-transformer-sharp`, // Needed for dynamic images,
-    `gatsby-plugin-sharp`,
+    {
+      resolve: `gatsby-plugin-sharp`,
+      options: {
+        defaults: {
+          formats: [`auto`, `webp`],
+          breakpoints: [750, 1080, 1366, 1920],
+          backgroundColor: `transparent`,
+        },
+      },
+    },
     `gatsby-plugin-image`,
     {
       resolve: `gatsby-source-wordpress`,
       options: {
         url: process.env.WPGRAPHQL_URL,
         schema: {
-          timeout: 30000,
+          timeout: 100000,
           perPage: 100,
         },
       },
@@ -37,6 +50,13 @@ module.exports = {
       resolve: "gatsby-plugin-manifest",
       options: {
         icon: "static/favicon-bco.webp",
+      },
+    },
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `images`,
+        path: `${__dirname}/src/images`,
       },
     },
   ],

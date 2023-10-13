@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useQuery, gql } from "@apollo/client";
 // import numeral from "numeral";
 import { CallToActionButton } from "../CallToActionButton";
@@ -101,7 +101,7 @@ export const ProyectSearch = ({ style, className }) => {
             </select>
           </div>
           <div className="ml-0 mt-2 flex sm:ml-5 sm:scroll-mt-0.5">
-            <button type="submit" className="btn mt-auto mb-[2px] w-full ">
+            <button type="submit" className="btn mb-[2px] mt-auto w-full ">
               Buscar
             </button>
           </div>
