@@ -85,7 +85,7 @@ export const blockRendererComponents = (block) => {
       );
     }
     case "acf/productfeatures": {
-      console.log("PODUCT FEATURES: ", block);
+      // console.log("PODUCT FEATURES: ", block);
       return (
         <ProductFeatures
           key={block.id}
@@ -163,11 +163,11 @@ export const blockRendererComponents = (block) => {
       );
     }
     case "tym/budgetlist": {
-      console.log("BUDGET: ", block);
+      // console.log("BUDGET: ", block);
       return <BudgetList key={block.id} />;
     }
     case "tym/budgetform": {
-      console.log("BUDGET FORM: ", block);
+      // console.log("BUDGET FORM: ", block);
       return <BudgetForm key={block.id} />;
     }
     case "core/media-text": {
@@ -185,7 +185,7 @@ export const blockRendererComponents = (block) => {
       );
     }
     case "core/group": {
-      console.log("GROUP: ", block);
+      // console.log("GROUP: ", block);
       const customClass = block.attributes.className;
 
       if (customClass === "productsSlider") {
@@ -201,7 +201,7 @@ export const blockRendererComponents = (block) => {
       return;
     }
     case "core/gallery": {
-      console.log("GALLERY: ", block);
+      // console.log("GALLERY: ", block);
       const customClass = block.attributes.className;
 
       if (customClass === "imageGallery") {
@@ -215,7 +215,7 @@ export const blockRendererComponents = (block) => {
       return;
     }
     case "core/embed": {
-      console.log("EMBED", block.attributes.url);
+      // console.log("EMBED", block.attributes.url);
 
       return (
         <iframe

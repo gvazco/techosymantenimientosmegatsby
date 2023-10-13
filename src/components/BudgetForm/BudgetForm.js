@@ -26,7 +26,7 @@ export const BudgetForm = () => {
       .querySelector("#wpcf7-f1545-o1")
       .querySelector(".funnel__form")
       .getElementsByTagName("textarea")[0];
-    console.log(cartItems);
+    // console.log(cartItems);
 
     const items = cartItems.map((item, index) => item.title);
     const itemsFormatted = items.join(",\n");

@@ -6,7 +6,7 @@ import { Layout } from "../components";
 import { graphql } from "gatsby";
 
 const Page = (props) => {
-  console.log("PAGE PROPS: ", props);
+  // console.log("PAGE PROPS: ", props);
   return (
     <Layout>
       <BlockRendererProvider

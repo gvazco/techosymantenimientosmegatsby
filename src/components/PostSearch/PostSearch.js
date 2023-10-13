@@ -69,7 +69,7 @@ export const PostSearch = ({ style, className }) => {
   const totalResults = data?.posts?.pageInfo?.offsetPagination?.total || 0;
   const totalPages = Math.ceil(totalResults / pageSize);
 
-  console.log("DATA: ", data, loading, error);
+  // console.log("DATA: ", data, loading, error);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -106,7 +106,7 @@ export const PostSearch = ({ style, className }) => {
             </select>
           </div>
           <div className="ml-0 mt-2 flex sm:ml-5 sm:scroll-mt-0.5">
-            <button type="submit" className="btn mt-auto mb-[2px] w-full ">
+            <button type="submit" className="btn mb-[2px] mt-auto w-full ">
               Buscar
             </button>
           </div>
