@@ -42,7 +42,7 @@ module.exports = {
         url: process.env.WPGRAPHQL_URL,
         schema: {
           timeout: 120000,
-          perPage: 120,
+          perPage: 100,
         },
       },
     },
