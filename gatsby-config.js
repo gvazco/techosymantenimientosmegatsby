@@ -42,7 +42,18 @@ module.exports = {
         url: process.env.WPGRAPHQL_URL,
         schema: {
           timeout: 360000,
-          perPage: 100,
+          perPage: 160,
+          requestConcurrency: 10,
+        },
+        html: {
+          imageQuality: 90,
+        },
+        type: {
+          MediaItem: {
+            localFile: {
+              requestConcurrency: 50,
+            },
+          },
         },
       },
     },

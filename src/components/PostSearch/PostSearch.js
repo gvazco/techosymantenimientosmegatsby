@@ -69,7 +69,7 @@ export const PostSearch = ({ style, className }) => {
   const totalResults = data?.posts?.pageInfo?.offsetPagination?.total || 0;
   const totalPages = Math.ceil(totalResults / pageSize);
 
-  // console.log("DATA: ", data, loading, error);
+  console.log("DATA: ", data, loading, error);
 
   const handleSubmit = (e) => {
     e.preventDefault();

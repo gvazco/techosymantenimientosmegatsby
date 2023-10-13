@@ -114,7 +114,7 @@ export const ProductSearch = ({ style, className }) => {
   const [showSuccessToast, setShowSuccessToast] = useState(false);
   const [showErrorToast, setShowErrorToast] = useState(false);
 
-  // console.log("DATA: ", data, loading, error);
+  console.log("DATA: ", data, loading, error);
 
   const handleSubmit = (e) => {
     e.preventDefault();
